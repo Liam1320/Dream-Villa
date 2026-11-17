@@ -1,7 +1,28 @@
 
-venv/
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Environment variables and secrets
 .env
+.env.*
+!.env.example
+
+# Mac files
 .DS_Store
+
+# Private customer information
 private_receipts/
+
+# Logs
+*.log
+
+# Test and cache files
+.pytest_cache/
+.mypy_cache/
