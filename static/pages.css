@@ -1,3 +1,4 @@
+
 /* ==========================================
    DREAM VILLA - SEPARATE PUBLIC PAGES
 ========================================== */
@@ -13,10 +14,11 @@
 .page-home-hero {
     background-image:
         linear-gradient(rgba(8,30,24,.48),rgba(8,30,24,.55)),
-        url('/static/images/resort-hero.jpg');
+        url('/static/images/new-resort-hero.jpg');
 
     background-position: center;
     background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .page-feature-section {
@@ -48,6 +50,7 @@
 }
 
 .page-feature-card > img {
+    display: block;
     width: 100%;
     height: 230px;
     object-fit: cover;
@@ -74,7 +77,9 @@
     font-weight: 700;
 }
 
-/* INNER PAGE */
+/* ==========================================
+   INNER PAGE
+========================================== */
 
 .inner-page {
     min-height: 65vh;
@@ -104,7 +109,9 @@
     color: #fff;
 }
 
-/* ROOMS */
+/* ==========================================
+   ROOMS
+========================================== */
 
 .room-page-grid {
     max-width: 1200px;
@@ -122,6 +129,7 @@
 }
 
 .room-page-card > img {
+    display: block;
     width: 100%;
     height: 300px;
     object-fit: cover;
@@ -160,7 +168,9 @@
     margin-top: 5px;
 }
 
-/* AMENITIES */
+/* ==========================================
+   AMENITIES
+========================================== */
 
 .amenity-page-grid {
     max-width: 1250px;
@@ -178,6 +188,7 @@
 }
 
 .amenity-page-card > img {
+    display: block;
     width: 100%;
     height: 245px;
     object-fit: cover;
@@ -196,9 +207,11 @@
     gap: 10px;
     margin-top: 17px;
     overflow-x: auto;
+    padding-bottom: 5px;
 }
 
 .mini-gallery img {
+    display: block;
     width: calc(33.333% - 7px);
     height: 100px;
     min-width: 90px;
@@ -226,7 +239,9 @@
     font-size: 42px;
 }
 
-/* VIRTUAL TOUR */
+/* ==========================================
+   VIRTUAL TOUR
+========================================== */
 
 .tour-page-card {
     max-width: 950px;
@@ -238,6 +253,7 @@
 }
 
 .tour-poster {
+    display: block;
     width: 100%;
     height: 300px;
     object-fit: cover;
@@ -245,6 +261,7 @@
 }
 
 .tour-page-card video {
+    display: block;
     width: 100%;
     max-height: 520px;
     background: #102c22;
@@ -265,7 +282,9 @@
     display: inline-block;
 }
 
-/* CONTACT */
+/* ==========================================
+   CONTACT
+========================================== */
 
 .contact-page-grid {
     max-width: 1100px;
@@ -332,7 +351,9 @@
     margin: 8px 0 20px;
 }
 
-/* FOOTER */
+/* ==========================================
+   FOOTER
+========================================== */
 
 .page-footer {
     background: #0b291d;
@@ -371,7 +392,9 @@
     margin-top: 22px;
 }
 
-/* RESPONSIVE DESIGN */
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
 
 @media(max-width:900px) {
 
@@ -437,6 +460,7 @@
         gap: 12px;
     }
 }
+
 /* ==========================================
    HOMEPAGE IMPROVEMENTS
 ========================================== */
@@ -494,6 +518,7 @@
 }
 
 .home-tour-image img {
+    display: block;
     width: 100%;
     height: 400px;
     object-fit: cover;
@@ -519,9 +544,12 @@
     display: inline-block;
 }
 
-/* RESPONSIVE HOMEPAGE */
+/* ==========================================
+   RESPONSIVE HOMEPAGE
+========================================== */
 
 @media(max-width:900px) {
+
     .benefit-grid {
         grid-template-columns: repeat(2,1fr);
     }
@@ -533,6 +561,7 @@
 }
 
 @media(max-width:600px) {
+
     .benefit-grid {
         grid-template-columns: 1fr;
     }
@@ -548,4 +577,63 @@
     .home-tour-content {
         text-align: center;
     }
+}
+/* ==========================================
+   FIX VIDEO DISPLAY
+========================================== */
+
+.tour-page-card video,
+.room-page-content video {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 250px;
+    max-height: 520px;
+    object-fit: contain;
+    background: #000;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.tour-page-card video {
+    aspect-ratio: 16 / 9;
+}/* ==========================================
+   DREAM VILLA - MEDIA DISPLAY FIX
+========================================== */
+
+.amenity-page-card img,
+.mini-gallery img,
+.room-page-card > img,
+.page-feature-card > img,
+.home-tour-image img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    max-width: 100%;
+}
+
+.amenity-page-card > img,
+.room-page-card > img {
+    width: 100% !important;
+    height: 245px !important;
+    object-fit: cover !important;
+}
+
+.mini-gallery img {
+    width: calc(33.333% - 7px) !important;
+    height: 100px !important;
+    min-width: 90px;
+    object-fit: cover !important;
+}
+
+.tour-page-card video,
+.room-page-content video {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 250px;
+    object-fit: contain !important;
+    background: #000;
 }

@@ -63,6 +63,39 @@ h1{font-size:22px}
 .otp-actions{align-items:stretch}
 .otp-actions .btn{width:100%}
 }
+.payment-section {
+    margin-top: 20px;
+    padding: 18px;
+    background: #f2f7f0;
+    border: 1px solid #dce8dc;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.payment-section h3 {
+    color: #315d3d;
+    margin-top: 0;
+}
+
+.payment-qr {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    margin: 15px auto;
+    border-radius: 10px;
+    background: white;
+}
+
+.payment-section p {
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.payment-amount {
+    font-size: 20px;
+    font-weight: bold;
+    color: #315d3d;
+}
 </style>
 </head>
 
@@ -319,6 +352,40 @@ h1{font-size:22px}
     <strong>Note:</strong>
     Check-out is calculated from your selected check-in time.
     Your booking is subject to date availability and confirmation.
+
+</div>
+<!-- GCASH PAYMENT -->
+<div class="payment-section">
+
+    <h3>GCash Reservation Payment</h3>
+
+    <p>
+        Scan the official Dream Villa payment QR code
+        using your GCash app or use gcash number : 09543345697 
+    </p>
+
+    <img
+        src="{{ url_for('static', filename='images/dream-villa-payment-qr.jpg') }}"
+        alt="Dream Villa GCash Payment QR Code"
+        class="payment-qr"
+    >
+
+    <p class="payment-amount">
+        Reservation Fee: ₱500
+    </p>
+
+    <p>
+        1. Open your GCash app.<br>
+        2. Scan the QR code.<br>
+        3. Enter ₱500 as the reservation fee.<br>
+        4. Confirm your payment.<br>
+        5. Keep your transaction reference number.
+    </p>
+
+    <small>
+        Transfer fees may apply. Your booking is subject
+        to payment verification and confirmation.
+    </small>
 
 </div>
 

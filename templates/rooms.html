@@ -80,7 +80,7 @@
         <article class="room-page-card">
 
             <img
-                src="{{ url_for('static', filename='images/room-1-cover.jpg') }}"
+                src="{{ url_for('static', filename='images/new-room-1-cover.jpg') }}"
                 alt="Room 1"
             >
 
@@ -101,10 +101,10 @@
                     controls
                     preload="metadata"
                     playsinline
-                    poster="{{ url_for('static', filename='images/room-1-cover.jpg') }}"
+                    poster="{{ url_for('static', filename='images/new-room-1-cover.jpg') }}"
                 >
                     <source
-                        src="{{ url_for('static', filename='videos/room-1.mp4') }}"
+                        src="{{ url_for('static', filename='videos/new-room-1.mp4') }}"
                         type="video/mp4"
                     >
 
@@ -120,7 +120,7 @@
         <article class="room-page-card">
 
             <img
-                src="{{ url_for('static', filename='images/room-2-cover.jpg') }}"
+                src="{{ url_for('static', filename='images/new-room-2-cover.jpg') }}"
                 alt="Room 2"
             >
 
@@ -141,10 +141,10 @@
                     controls
                     preload="metadata"
                     playsinline
-                    poster="{{ url_for('static', filename='images/room-2-cover.jpg') }}"
+                    poster="{{ url_for('static', filename='images/new-room-2-cover.jpg') }}"
                 >
                     <source
-                        src="{{ url_for('static', filename='videos/room-2.mp4') }}"
+                        src="{{ url_for('static', filename='videos/new-room-2.mp4') }}"
                         type="video/mp4"
                     >
 
@@ -165,15 +165,7 @@
 
     <h2>Dream Villa</h2>
 
-    <div class="footer-links">
-        <a href="{{ url_for('home') }}">Home</a>
-        <a href="{{ url_for('rooms') }}">Rooms</a>
-        <a href="{{ url_for('amenities') }}">Amenities</a>
-        <a href="{{ url_for('virtual_tour') }}">Virtual Tour</a>
-        <a href="{{ url_for('contact') }}">Contact</a>
-        <a href="{{ url_for('booking') }}">Booking</a>
-    </div>
-
+    
     <p class="copyright">
         © 2026 Dream Villa Resort. All Rights Reserved.
     </p>

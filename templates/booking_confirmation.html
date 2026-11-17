@@ -175,6 +175,33 @@
             margin: 7px 0;
         }
 
+        /* GCASH QR CODE */
+        .payment-qr {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            margin: 18px auto;
+            border-radius: 10px;
+            border: 1px solid #e1e8e1;
+            background: white;
+        }
+
+        .qr-instructions {
+            text-align: center;
+            line-height: 1.7;
+        }
+
+        .qr-instructions strong {
+            color: #205744;
+        }
+
+        .qr-amount {
+            color: #205744;
+            font-size: 25px;
+            margin: 10px 0;
+        }
+
         .form-group {
             margin-bottom: 18px;
         }
@@ -462,30 +489,43 @@
 
         <div class="payment-box">
 
-            <h3>Dream Villa Payment Information</h3>
+            <h3>Dream Villa GCash / InstaPay Payment</h3>
 
             <p>
-                <strong>Payment Method:</strong> GCash
+                Please scan the official payment QR code below
+                using your GCash app.
             </p>
 
-            <p>
-                <strong>Account Name:</strong> Dream Villa
-            </p>
+            <img
+                src="{{ url_for('static', filename='images/dream-villa-payment-qr.jpg') }}"
+                alt="Dream Villa payment QR code"
+                class="payment-qr"
+            >
 
-            <p>
-                <strong>GCash Number:</strong>
-                Replace with your actual GCash number
-            </p>
+            <div class="qr-instructions">
 
-            <p>
-                <strong>Reservation Fee:</strong>
-                ₱{{ "{:,.2f}".format(reservation_fee|float) }}
-            </p>
+                <p>
+                    <strong>Reservation Fee:</strong>
+                </p>
 
-            <p>
-                Please pay the reservation fee and upload your
-                payment receipt for admin verification.
-            </p>
+                <h2 class="qr-amount">
+                    ₱{{ "{:,.2f}".format(reservation_fee|float) }}
+                </h2>
+
+                <p>
+                    1. Open your GCash app.<br>
+                    2. Select Scan QR.<br>
+                    3. Scan the QR code above.<br>
+                    4. Enter the reservation fee amount.<br>
+                    5. Review the payment details before confirming.
+                </p>
+
+                <small>
+                    Transfer fees may apply. Please keep your transaction
+                    reference number and payment receipt.
+                </small>
+
+            </div>
 
         </div>
 

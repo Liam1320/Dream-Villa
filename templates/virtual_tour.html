@@ -19,18 +19,30 @@
 
 <!-- NAVIGATION BAR -->
 <header class="navbar page-navbar">
+
     <div class="nav-container">
 
         <a href="{{ url_for('home') }}" class="brand">
-            <img src="{{ url_for('static', filename='images/dream-villa-logo.jpeg') }}" alt="Dream Villa logo">
+
+            <img
+                src="{{ url_for('static', filename='images/dream-villa-logo.jpeg') }}"
+                alt="Dream Villa logo"
+            >
+
             <span>Dream Villa</span>
+
         </a>
 
         <nav>
+
             <a href="{{ url_for('home') }}">Home</a>
+
             <a href="{{ url_for('rooms') }}">Rooms</a>
+
             <a href="{{ url_for('amenities') }}">Amenities</a>
+
             <a class="active" href="{{ url_for('virtual_tour') }}">Virtual Tour</a>
+
             <a href="{{ url_for('contact') }}">Contact</a>
 
             <!-- CUSTOMER AND ADMIN NAVIGATION -->
@@ -38,23 +50,25 @@
 
                 <a href="{{ url_for('dashboard') }}">Dashboard</a>
 
-                <!-- ADMIN ACCOUNT ONLY -->
                 {% if session.get('user_role') == 'admin' %}
                     <a href="{{ url_for('admin') }}">Admin Dashboard</a>
                 {% endif %}
 
             {% else %}
 
-                <!-- GUEST LOGIN -->
                 <a href="{{ url_for('login') }}">Login</a>
 
             {% endif %}
 
             <!-- BOOKING BUTTON -->
-            <a class="book-btn" href="{{ url_for('booking') }}">Book Now</a>
+            <a class="book-btn" href="{{ url_for('booking') }}">
+                Book Now
+            </a>
+
         </nav>
 
     </div>
+
 </header>
 
 
@@ -63,6 +77,7 @@
 
     <!-- PAGE HEADING -->
     <section class="page-heading">
+
         <p class="section-label">DISCOVER DREAM VILLA</p>
 
         <h1>Take a Virtual Tour</h1>
@@ -70,27 +85,22 @@
         <p>
             Explore the resort and get a closer look before your visit.
         </p>
+
     </section>
 
 
     <!-- VIRTUAL TOUR VIDEO -->
     <section class="tour-page-card">
 
-        <img
-            class="tour-poster"
-            src="{{ url_for('static', filename='images/pool-1.jpg') }}"
-            alt="Dream Villa swimming pool"
-        >
-
         <video
             controls
             preload="metadata"
             playsinline
-            poster="{{ url_for('static', filename='images/pool-1.jpg') }}"
+            poster="{{ url_for('static', filename='images/new-pool-1.jpg') }}"
         >
 
             <source
-                src="{{ url_for('static', filename='videos/resort-tour.mp4') }}"
+                src="{{ url_for('static', filename='videos/new-resort-virtual-tour.mp4') }}"
                 type="video/mp4"
             >
 
@@ -99,12 +109,14 @@
         </video>
 
         <div>
+
             <h2>Dream Villa Resort Tour</h2>
 
             <p>
                 Watch the video to explore the resort's spaces
                 and atmosphere.
             </p>
+
         </div>
 
     </section>
@@ -116,15 +128,6 @@
 <footer class="page-footer">
 
     <h2>Dream Villa</h2>
-
-    <div class="footer-links">
-        <a href="{{ url_for('home') }}">Home</a>
-        <a href="{{ url_for('rooms') }}">Rooms</a>
-        <a href="{{ url_for('amenities') }}">Amenities</a>
-        <a href="{{ url_for('virtual_tour') }}">Virtual Tour</a>
-        <a href="{{ url_for('contact') }}">Contact</a>
-        <a href="{{ url_for('booking') }}">Booking</a>
-    </div>
 
     <p class="copyright">
         © 2026 Dream Villa Resort. All Rights Reserved.

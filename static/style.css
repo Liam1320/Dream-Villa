@@ -2386,3 +2386,146 @@ footer h2::after {
 #room2-details .detail-book-btn {
     display: none;
 }
+/* ==========================================
+   DREAM VILLA - MEDIA VISIBILITY FIX
+   ========================================== */
+
+/* Make images visible */
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    visibility: visible;
+}
+
+/* Room images */
+.room-one-image {
+    background-image: url("/static/images/new-room-1-cover.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.room-two-image {
+    background-image: url("/static/images/new-room-2-cover.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Homepage hero */
+.hero {
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(5, 25, 16, .84) 0%,
+            rgba(5, 25, 16, .55) 45%,
+            rgba(5, 25, 16, .08) 100%
+        ),
+        url("/static/images/new-resort-hero.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Booking banner */
+.booking-banner {
+    background-image:
+        linear-gradient(
+            100deg,
+            rgba(8, 40, 25, .96),
+            rgba(28, 91, 55, .87)
+        ),
+        url("/static/images/new-garden-1.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+/* Amenities images */
+.amenity-page-card img,
+.amenity-card img,
+.mini-gallery img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Virtual tour videos */
+video {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 200px;
+    background: #102b20;
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Room and resort video containers */
+.room-video-container,
+.tour-video-container,
+.tour-page-card {
+    width: 100%;
+    overflow: visible;
+}
+
+.room-video-container video,
+.tour-video-container video,
+.tour-page-card video {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 580px;
+    object-fit: contain;
+}
+
+/* Prevent scroll reveal from hiding content */
+.js-reveal,
+.js-reveal.is-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+}
+
+/* Responsive media */
+@media (max-width: 600px) {
+    .room-one-image,
+    .room-two-image {
+        min-height: 220px;
+    }
+
+    video {
+        min-height: 180px;
+    }
+}
+
+/* ==========================================
+   DREAM VILLA - LANDSCAPE VIDEO
+   ========================================== */
+
+.tour-page-card video,
+.tour-video-container video,
+.room-video-container video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+    background: #102b20;
+    border-radius: 14px;
+}
+
+/* Landscape video container */
+.tour-page-card,
+.tour-video-container,
+.room-video-container {
+    width: 100%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
