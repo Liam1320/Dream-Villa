@@ -62,7 +62,15 @@ if not SECRET_KEY:
     raise RuntimeError(
         "SECRET_KEY is missing. Add SECRET_KEY=your_generated_key to the .env file."
     )
-app.secret_key = os.getenv("SECRET_KEY")
+app.secret_key = SECRET_KEY
+
+# Session security settings
+app.config.update(
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Lax",
+    SESSION_COOKIE_SECURE=False,
+    PERMANENT_SESSION_LIFETIME=timedelta(days=1)
+)
 
 csrf = CSRFProtect(app)
 
@@ -144,13 +152,15 @@ def image_extension_matches(filename, file):
 # DATABASE CONNECTION
 # ==========================================
 
+
 def get_db_connection():
     return mysql.connector.connect(
-        host="127.0.0.1",
-        user="root",
-        password="",
-        database="dream_villa"
+        host=os.getenv("DB_HOST", "127.0.0.1"),
+        user=os.getenv("DB_USER", "root"),
+        password=os.getenv("DB_PASSWORD", ""),
+        database=os.getenv("DB_NAME", "dream_villa")
     )
+
 
 
 # ==========================================
@@ -2299,6 +2309,8 @@ def login():
                     or session.get("after_login") == url_for("booking")
                 )
                 session.clear()
+
+                session.permanent = True
 
                 session["user_id"] = user["id"]
                 session["user_name"] = user["fullname"]
