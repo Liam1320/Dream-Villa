@@ -1,0 +1,551 @@
+/* ==========================================
+   DREAM VILLA - SEPARATE PUBLIC PAGES
+========================================== */
+
+.page-navbar {
+    position: sticky;
+    top: 0;
+    background: rgba(11, 41, 29, .97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.page-home-hero {
+    background-image:
+        linear-gradient(rgba(8,30,24,.48),rgba(8,30,24,.55)),
+        url('/static/images/resort-hero.jpg');
+
+    background-position: center;
+    background-size: cover;
+}
+
+.page-feature-section {
+    padding: 85px 6%;
+    background: #f7f4eb;
+}
+
+.page-card-grid {
+    max-width: 1250px;
+    margin: 35px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 25px;
+}
+
+.page-feature-card {
+    display: block;
+    background: #fffefa;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(20,55,50,.09);
+    color: #29352d;
+    transition: transform .25s, box-shadow .25s;
+}
+
+.page-feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(20,55,50,.15);
+}
+
+.page-feature-card > img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+
+.page-feature-card > div {
+    padding: 24px;
+}
+
+.page-feature-card h3 {
+    font-family: 'Playfair Display',Georgia,serif;
+    font-size: 25px;
+    color: #153f2c;
+    margin-bottom: 8px;
+}
+
+.page-feature-card p {
+    color: #777e75;
+    margin-bottom: 15px;
+}
+
+.page-feature-card span {
+    color: #286044;
+    font-weight: 700;
+}
+
+/* INNER PAGE */
+
+.inner-page {
+    min-height: 65vh;
+    padding: 65px 6% 90px;
+    background: #fffefa;
+}
+
+.page-heading {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 45px;
+}
+
+.page-heading h1 {
+    font-family: 'Playfair Display',Georgia,serif;
+    color: #153f2c;
+    font-size: clamp(36px,5vw,56px);
+    line-height: 1.15;
+    margin: 10px 0;
+}
+
+.page-heading > p:last-child {
+    color: #777e75;
+}
+
+.page-navbar .brand {
+    color: #fff;
+}
+
+/* ROOMS */
+
+.room-page-grid {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 30px;
+}
+
+.room-page-card {
+    background: #f7f4eb;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(20,55,50,.08);
+}
+
+.room-page-card > img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.room-page-content {
+    padding: 28px;
+}
+
+.room-page-content h2,
+.amenity-page-card h2,
+.tour-page-card h2,
+.contact-page-card h2 {
+    font-family: 'Playfair Display',Georgia,serif;
+    color: #153f2c;
+    font-size: 29px;
+    margin: 4px 0 10px;
+}
+
+.room-page-content > p:not(.section-label) {
+    color: #737d78;
+    margin-bottom: 18px;
+}
+
+.room-page-content video {
+    display: block;
+    width: 100%;
+    max-height: 360px;
+    background: #102c22;
+    border-radius: 12px;
+    margin: 18px 0;
+}
+
+.room-page-content .primary-btn {
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/* AMENITIES */
+
+.amenity-page-grid {
+    max-width: 1250px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 25px;
+}
+
+.amenity-page-card {
+    background: #f7f4eb;
+    border-radius: 17px;
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(20,55,50,.07);
+}
+
+.amenity-page-card > img {
+    width: 100%;
+    height: 245px;
+    object-fit: cover;
+}
+
+.amenity-page-card > div:not(.amenity-symbol) {
+    padding: 22px;
+}
+
+.amenity-page-card p {
+    color: #737d78;
+}
+
+.mini-gallery {
+    display: flex;
+    gap: 10px;
+    margin-top: 17px;
+    overflow-x: auto;
+}
+
+.mini-gallery img {
+    width: calc(33.333% - 7px);
+    height: 100px;
+    min-width: 90px;
+    object-fit: cover;
+    border-radius: 9px;
+}
+
+.amenity-text-card {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 25px;
+    min-height: 170px;
+}
+
+.amenity-symbol {
+    width: 65px;
+    height: 65px;
+    flex: 0 0 65px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #153f2c;
+    color: white;
+    font-size: 42px;
+}
+
+/* VIRTUAL TOUR */
+
+.tour-page-card {
+    max-width: 950px;
+    margin: auto;
+    background: #f7f4eb;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 12px 35px rgba(20,55,50,.08);
+}
+
+.tour-poster {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.tour-page-card video {
+    width: 100%;
+    max-height: 520px;
+    background: #102c22;
+    border-radius: 12px;
+    margin: 18px 0;
+}
+
+.tour-page-card > div:last-child {
+    padding: 10px 5px;
+}
+
+.tour-page-card p {
+    color: #737d78;
+    margin-bottom: 18px;
+}
+
+.tour-page-card .primary-btn {
+    display: inline-block;
+}
+
+/* CONTACT */
+
+.contact-page-grid {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 22px;
+}
+
+.contact-page-card {
+    background: #f7f4eb;
+    border-radius: 17px;
+    padding: 30px 24px;
+    text-align: center;
+    box-shadow: 0 10px 28px rgba(20,55,50,.07);
+}
+
+.contact-symbol {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #153f2c;
+    color: #fff;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.contact-page-card p {
+    color: #737d78;
+    margin-bottom: 15px;
+}
+
+.contact-page-card strong {
+    display: block;
+    color: #153f2c;
+    overflow-wrap: anywhere;
+}
+
+.contact-page-card small {
+    display: block;
+    color: #8a8f88;
+    margin-top: 10px;
+}
+
+.contact-cta {
+    text-align: center;
+    margin: 55px auto 0;
+    padding: 40px 20px;
+    background: #edf1e8;
+    border-radius: 18px;
+}
+
+.contact-cta h2 {
+    font-family: 'Playfair Display',Georgia,serif;
+    color: #153f2c;
+    font-size: 30px;
+}
+
+.contact-cta p {
+    color: #737d78;
+    margin: 8px 0 20px;
+}
+
+/* FOOTER */
+
+.page-footer {
+    background: #0b291d;
+    color: #fff;
+    text-align: center;
+    padding: 45px 20px;
+}
+
+.page-footer h2 {
+    font-family: 'Playfair Display',Georgia,serif;
+    font-size: 30px;
+}
+
+.page-footer p {
+    color: rgba(255,255,255,.75);
+}
+
+.page-footer .footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 22px;
+    margin: 20px 0;
+}
+
+.page-footer .footer-links a {
+    color: #fff;
+}
+
+.page-footer .footer-links a:hover {
+    color: #e7d3a8;
+}
+
+.page-footer .copyright {
+    font-size: 13px;
+    margin-top: 22px;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media(max-width:900px) {
+
+    .page-card-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+
+    .nav-container {
+        width: 94%;
+        flex-direction: column;
+        padding: 12px 0;
+    }
+
+    .page-navbar .nav-container {
+        gap: 8px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 3px;
+    }
+
+    nav a {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .room-page-grid,
+    .amenity-page-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-page-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media(max-width:600px) {
+
+    .page-card-grid,
+    .contact-page-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-feature-section {
+        padding: 55px 5%;
+    }
+
+    .inner-page {
+        padding: 45px 5% 65px;
+    }
+
+    .room-page-card > img {
+        height: 220px;
+    }
+
+    .tour-poster {
+        height: 210px;
+    }
+
+    .page-footer .footer-links {
+        gap: 12px;
+    }
+}
+/* ==========================================
+   HOMEPAGE IMPROVEMENTS
+========================================== */
+
+.home-benefits {
+    padding: 85px 6%;
+    background: #fffefa;
+}
+
+.benefit-grid {
+    max-width: 1200px;
+    margin: 40px auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.benefit-item {
+    padding: 30px 22px;
+    text-align: center;
+    background: #f7f4eb;
+    border-radius: 16px;
+    transition: .25s ease;
+}
+
+.benefit-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(20,55,50,.10);
+}
+
+.benefit-icon {
+    font-size: 38px;
+    margin-bottom: 14px;
+}
+
+.benefit-item h3 {
+    color: #153f2c;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 21px;
+    margin-bottom: 9px;
+}
+
+.benefit-item p {
+    color: #737d78;
+    font-size: 14px;
+}
+
+.home-tour-section {
+    padding: 85px 7%;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+    gap: 55px;
+    background: #f7f4eb;
+}
+
+.home-tour-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: 0 15px 35px rgba(20,55,50,.12);
+}
+
+.home-tour-content h2 {
+    color: #153f2c;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(30px,4vw,43px);
+    line-height: 1.2;
+    margin: 12px 0;
+}
+
+.home-tour-content p:not(.section-label) {
+    color: #737d78;
+    margin-bottom: 23px;
+    max-width: 500px;
+}
+
+.home-tour-content .primary-btn {
+    display: inline-block;
+}
+
+/* RESPONSIVE HOMEPAGE */
+
+@media(max-width:900px) {
+    .benefit-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .home-tour-section {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+@media(max-width:600px) {
+    .benefit-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-tour-section {
+        padding: 55px 5%;
+    }
+
+    .home-tour-image img {
+        height: 250px;
+    }
+
+    .home-tour-content {
+        text-align: center;
+    }
+}

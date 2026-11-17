@@ -1,0 +1,890 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Your Stay | Dream Villa</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f5f7f2;color:#26352a}
+.container{width:92%;max-width:850px;margin:30px auto}
+.header{text-align:center;margin-bottom:20px}
+.brand{color:#39744b;font-size:14px;font-weight:bold;letter-spacing:2px;text-transform:uppercase}
+h1{margin:8px 0;font-size:25px;font-weight:600}
+.subtitle{margin:0;color:#6b756d;font-size:14px}
+.booking-card{background:white;border-radius:12px;padding:25px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.section-title{font-size:17px;margin:0 0 18px;color:#315d3d}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.form-group{display:flex;flex-direction:column;min-width:0}
+.full-width{grid-column:1/-1}
+label{font-size:13px;font-weight:bold;margin-bottom:7px}
+input,select{width:100%;padding:11px;border:1px solid #d7ded7;border-radius:7px;background:#fff;font-size:14px;color:#26352a}
+input:focus,select:focus{outline:none;border-color:#39744b;box-shadow:0 0 0 2px rgba(57,116,75,.12)}
+input[readonly]{background:#f2f7f0;font-weight:bold}
+.rate-note{margin-top:18px;padding:13px;background:#f2f7f0;border-radius:8px;font-size:13px;line-height:1.8}
+.rate-note strong,.price-summary strong{color:#315d3d}
+.room-options{padding:15px;background:#f2f7f0;border:1px solid #dce8dc;border-radius:8px}
+.room-options p{margin:0 0 10px;font-size:14px;line-height:1.6}
+.room-checkbox{display:flex;align-items:center;gap:10px;margin:0;cursor:pointer;font-size:14px}
+.room-checkbox input{width:18px;height:18px;margin:0;accent-color:#39744b}
+.price-summary{margin-top:12px;padding:13px;background:#fff;border:1px solid #d7ded7;border-radius:8px;font-size:14px;line-height:1.8}
+.unavailable-box{margin-top:15px;padding:13px;background:#fff8ed;border:1px solid #f0dfc3;border-radius:8px;font-size:13px}
+.unavailable-box h3{margin:0 0 8px;font-size:14px;color:#805b24}
+#unavailableList{margin:0;padding-left:20px;line-height:1.7;overflow-wrap:anywhere}
+.warning{display:none;margin-top:15px;padding:11px;border-radius:7px;background:#fff0f0;color:#a52a2a;font-size:13px;line-height:1.5}
+.flash-messages{margin-bottom:15px}
+.flash-message{padding:12px;margin-bottom:8px;border-radius:7px;background:#edf7ed;color:#285b32;font-size:13px;overflow-wrap:anywhere}
+.flash-message.error{background:#fff0f0;color:#a52a2a}
+.button-row{display:flex;gap:10px;margin-top:20px}
+.btn{display:inline-block;padding:12px 18px;border:none;border-radius:7px;font-size:14px;text-align:center;text-decoration:none;cursor:pointer}
+.btn-primary{background:#39744b;color:white}
+.btn-primary:hover{background:#2d603c}
+.btn-secondary{background:#edf0eb;color:#354b38}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.otp-panel{padding:15px;background:#f2f7f0;border:1px solid #dce8dc;border-radius:8px}
+.otp-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.otp-actions .btn{padding:10px 14px}
+.otp-status{display:block;margin-top:10px;font-size:13px;line-height:1.5}
+.otp-status.success{color:#246b35}
+.otp-status.error{color:#a52a2a}
+.otp-code{max-width:220px;letter-spacing:4px;font-weight:bold}
+.footer{text-align:center;padding:20px 10px;color:#7b847b;font-size:12px}
+small{color:#6b756d;font-size:12px;line-height:1.5}
+
+@media(max-width:600px){
+.container{width:94%;margin:20px auto}
+.booking-card{padding:18px}
+.form-grid{grid-template-columns:1fr}
+.full-width{grid-column:auto}
+h1{font-size:22px}
+.button-row{flex-direction:column}
+.otp-actions{align-items:stretch}
+.otp-actions .btn{width:100%}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header class="header">
+    <div class="brand">Dream Villa</div>
+    <h1>Book Your Stay</h1>
+    <p class="subtitle">
+        Choose your check-in time and submit your reservation request.
+    </p>
+</header>
+
+<section class="booking-card">
+<h2 class="section-title">Reservation Details</h2>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="flash-message {{ category if category == 'error' else '' }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+{% set values = form_data or {} %}
+
+<form id="bookingForm"
+      action="{{ url_for('booking') }}"
+      method="POST">
+
+<input type="hidden"
+       name="csrf_token"
+       value="{{ csrf_token() }}">
+
+<div class="form-grid">
+
+    <!-- FULL NAME -->
+    <div class="form-group full-width">
+        <label for="name">Full Name</label>
+        <input type="text"
+               id="name"
+               name="name"
+               placeholder="Enter your full name"
+               maxlength="100"
+               autocomplete="name"
+               value="{{ values.get('name', session.get('user_name', '')) }}"
+               required>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="form-group full-width">
+        <label for="email">Email Address</label>
+        <input type="email"
+               id="email"
+               name="email"
+               placeholder="Enter your email address"
+               maxlength="150"
+               autocomplete="email"
+               value="{{ values.get('email', session.get('user_email', '')) }}"
+               required>
+    </div>
+
+    <!-- EMAIL OTP VERIFICATION -->
+    <div class="form-group full-width">
+        <div class="otp-panel">
+
+            <strong>Verify Your Email Address</strong>
+
+            <p style="font-size:13px;line-height:1.5;margin:7px 0 12px">
+                Send a 6-digit verification code to your email before
+                submitting your booking.
+            </p>
+
+            <button type="button"
+                    class="btn btn-primary"
+                    id="sendOtpBtn">
+                Send OTP
+            </button>
+
+            <div style="margin-top:13px">
+                <label for="otpCode">6-Digit OTP</label>
+
+                <input class="otp-code"
+                       type="text"
+                       id="otpCode"
+                       inputmode="numeric"
+                       autocomplete="one-time-code"
+                       maxlength="6"
+                       pattern="[0-9]{6}"
+                       placeholder="Enter code">
+            </div>
+
+            <div class="otp-actions">
+                <button type="button"
+                        class="btn btn-secondary"
+                        id="verifyOtpBtn">
+                    Verify OTP
+                </button>
+            </div>
+
+            <span id="otpStatus"
+                  class="otp-status"
+                  role="status"
+                  aria-live="polite">
+                {% if email_verified %}
+                    Email verified successfully. You can now submit your booking.
+                {% else %}
+                    Email verification is required.
+                {% endif %}
+            </span>
+
+        </div>
+    </div>
+
+    <!-- BOOKING TYPE -->
+    <div class="form-group">
+        <label for="booking_type">Booking Type</label>
+
+        <select id="booking_type" name="booking_type" required>
+            <option value=""
+                {% if not values.get('booking_type') %}selected{% endif %}>
+                Select booking type
+            </option>
+
+            <option value="Day"
+                {% if values.get('booking_type') == 'Day' %}selected{% endif %}>
+                Day — ₱4,000 (10 hours)
+            </option>
+
+            <option value="Night"
+                {% if values.get('booking_type') == 'Night' %}selected{% endif %}>
+                Night — ₱5,000 (10 hours)
+            </option>
+
+            <option value="Full day"
+                {% if values.get('booking_type') == 'Full day' %}selected{% endif %}>
+                Full Day — ₱7,000 (22 hours)
+            </option>
+        </select>
+    </div>
+
+    <!-- GUESTS -->
+    <div class="form-group">
+        <label for="guests">Number of Guests</label>
+
+        <input type="number"
+               id="guests"
+               name="guests"
+               min="1"
+               max="100"
+               placeholder="Enter guests"
+               value="{{ values.get('guests', '') }}"
+               required>
+    </div>
+
+    <!-- ROOM SELECTION -->
+    <div class="form-group full-width">
+        <label>Room Selection</label>
+
+        <div class="room-options">
+
+            <p>
+                <strong>Room 1</strong> — Included in every booking.
+            </p>
+
+            <label class="room-checkbox" for="add_second_room">
+                <input type="checkbox"
+                       id="add_second_room"
+                       name="add_second_room"
+                       value="yes"
+                       {% if values.get('add_second_room') %}checked{% endif %}>
+
+                <span>
+                    <strong>Add Second Room (+₱500)</strong>
+                </span>
+            </label>
+
+            <p style="margin:10px 0 0">
+                Room 2 is optional and adds a one-time ₱500 fee
+                to your booking, regardless of booking type.
+            </p>
+
+        </div>
+    </div>
+
+    <!-- CHECK-IN -->
+    <div class="form-group full-width">
+        <label for="checkin">Check-in Date and Time</label>
+
+        <input type="datetime-local"
+               id="checkin"
+               name="checkin"
+               step="60"
+               value="{{ values.get('checkin', '') }}"
+               required>
+    </div>
+
+    <!-- AUTOMATIC CHECKOUT -->
+    <div class="form-group full-width">
+        <label for="checkout_preview">
+            Automatic Check-out Date and Time
+        </label>
+
+        <input type="datetime-local"
+               id="checkout_preview"
+               readonly
+               aria-describedby="checkoutHelp">
+
+        <small id="checkoutHelp">
+            Select your booking type and check-in time first.
+            Your check-out will be calculated automatically.
+        </small>
+    </div>
+
+</div>
+
+<!-- RATES -->
+<div class="rate-note">
+
+    <strong>Rates and Duration</strong><br>
+    Day: ₱4,000 — 10 hours<br>
+    Night: ₱5,000 — 10 hours<br>
+    Full Day: ₱7,000 — 22 hours<br>
+    Room 1: Included<br>
+    Optional Room 2: +₱500 one-time fee<br>
+    Reservation fee: ₱500 (separate from booking rate)
+
+    <div class="price-summary" aria-live="polite">
+
+        <div>
+            Base Booking Rate:
+            <strong id="baseRateDisplay">Select a booking type</strong>
+        </div>
+
+        <div>
+            Room 2 Fee:
+            <strong id="roomFeeDisplay">₱0</strong>
+        </div>
+
+        <div>
+            Total Booking Rate:
+            <strong id="totalRateDisplay">Select a booking type</strong>
+        </div>
+
+    </div>
+
+    <br>
+
+    <strong>Note:</strong>
+    Check-out is calculated from your selected check-in time.
+    Your booking is subject to date availability and confirmation.
+
+</div>
+
+<!-- UNAVAILABLE DATES -->
+<div class="unavailable-box">
+
+    <h3>Unavailable Dates</h3>
+
+    <ul id="unavailableList">
+        {% if unavailable_dates %}
+            {% for item in unavailable_dates %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        {% else %}
+            <li>No unavailable dates have been added.</li>
+        {% endif %}
+    </ul>
+
+</div>
+
+<div class="warning" id="dateWarning" role="alert"></div>
+
+<!-- BUTTONS -->
+<div class="button-row">
+
+    <a href="{{ url_for('home') }}"
+       class="btn btn-secondary">
+        Back to Home
+    </a>
+
+    <button type="submit" class="btn btn-primary">
+        Submit Booking
+    </button>
+
+</div>
+
+</form>
+</section>
+
+<footer class="footer">
+    &copy; 2026 Dream Villa &bull; Private Resort
+</footer>
+
+</div>
+
+<script type="application/json" id="unavailableDatesData">{{ unavailable_dates | tojson }}</script>
+
+<script>
+// ==========================================
+// UNAVAILABLE DATES
+// ==========================================
+
+const dataElement = document.getElementById("unavailableDatesData");
+
+let unavailableDates = [];
+
+try {
+    unavailableDates = JSON.parse(dataElement.textContent);
+} catch (error) {
+    console.error("Could not read unavailable dates:", error);
+}
+
+unavailableDates = unavailableDates.map(
+    item => String(item).slice(0, 10)
+);
+
+// ==========================================
+// ELEMENTS
+// ==========================================
+
+const form = document.getElementById("bookingForm");
+
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+
+const bookingType = document.getElementById("booking_type");
+const checkin = document.getElementById("checkin");
+const checkoutPreview = document.getElementById("checkout_preview");
+
+const warning = document.getElementById("dateWarning");
+const addSecondRoom = document.getElementById("add_second_room");
+
+const baseRateDisplay = document.getElementById("baseRateDisplay");
+const roomFeeDisplay = document.getElementById("roomFeeDisplay");
+const totalRateDisplay = document.getElementById("totalRateDisplay");
+
+const sendOtpBtn = document.getElementById("sendOtpBtn");
+const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+const otpCode = document.getElementById("otpCode");
+const otpStatus = document.getElementById("otpStatus");
+
+// ==========================================
+// OTP VERIFICATION STATE
+// ==========================================
+
+// This value comes from the Flask backend.
+// It remains true after a booking validation error
+// if the same name and email are still verified.
+
+let emailVerified = {{ 'true' if email_verified else 'false' }};
+
+let verifiedName = emailVerified
+    ? nameInput.value.trim()
+    : "";
+
+let verifiedEmail = emailVerified
+    ? emailInput.value.trim().toLowerCase()
+    : "";
+
+// ==========================================
+// OTP STATUS
+// ==========================================
+
+function setOtpStatus(message, type = "") {
+    otpStatus.textContent = message;
+    otpStatus.className = "otp-status " + type;
+}
+
+function resetEmailVerification() {
+
+    emailVerified = false;
+    verifiedName = "";
+    verifiedEmail = "";
+
+    setOtpStatus(
+        "Your name or email changed. Please request and verify a new OTP."
+    );
+}
+
+nameInput.addEventListener("input", resetEmailVerification);
+emailInput.addEventListener("input", resetEmailVerification);
+
+// ==========================================
+// OTP REQUEST
+// ==========================================
+
+async function otpRequest(url, fields) {
+
+    const body = new FormData();
+
+    body.append(
+        "csrf_token",
+        form.querySelector('[name="csrf_token"]').value
+    );
+
+    Object.entries(fields).forEach(([key, value]) => {
+        body.append(key, value);
+    });
+
+    const response = await fetch(url, {
+        method: "POST",
+        body: body
+    });
+
+    let result;
+
+    try {
+        result = await response.json();
+    } catch (error) {
+        throw new Error(
+            "Unexpected server response. Please reload the page and try again."
+        );
+    }
+
+    if (!response.ok || !result.success) {
+        throw new Error(
+            result.message || "The request could not be completed."
+        );
+    }
+
+    return result;
+}
+
+// ==========================================
+// SEND OTP
+// ==========================================
+
+sendOtpBtn.addEventListener("click", async function () {
+
+    const customerName = nameInput.value.trim();
+    const customerEmail = emailInput.value.trim();
+
+    if (!customerName || !emailInput.checkValidity()) {
+        setOtpStatus(
+            "Enter your full name and a valid email address first.",
+            "error"
+        );
+        return;
+    }
+
+    sendOtpBtn.disabled = true;
+    setOtpStatus("Sending OTP...");
+
+    try {
+
+        const result = await otpRequest(
+            '{{ url_for("send_booking_otp") }}',
+            {
+                name: customerName,
+                email: customerEmail
+            }
+        );
+
+        emailVerified = false;
+        verifiedName = "";
+        verifiedEmail = "";
+
+        otpCode.value = "";
+
+        setOtpStatus(result.message, "success");
+
+    } catch (error) {
+
+        setOtpStatus(error.message, "error");
+
+    } finally {
+
+        sendOtpBtn.disabled = false;
+
+    }
+});
+
+// ==========================================
+// VERIFY OTP
+// ==========================================
+
+verifyOtpBtn.addEventListener("click", async function () {
+
+    const customerName = nameInput.value.trim();
+    const customerEmail = emailInput.value.trim();
+    const code = otpCode.value.trim();
+
+    if (!customerName || !emailInput.checkValidity()) {
+        setOtpStatus(
+            "Enter your full name and valid email address.",
+            "error"
+        );
+        return;
+    }
+
+    if (!/^\d{6}$/.test(code)) {
+        setOtpStatus(
+            "Enter the 6-digit OTP sent to your email.",
+            "error"
+        );
+        return;
+    }
+
+    verifyOtpBtn.disabled = true;
+    setOtpStatus("Verifying OTP...");
+
+    try {
+
+        const result = await otpRequest(
+            '{{ url_for("verify_booking_otp") }}',
+            {
+                name: customerName,
+                email: customerEmail,
+                otp: code
+            }
+        );
+
+        emailVerified = true;
+        verifiedName = customerName;
+        verifiedEmail = customerEmail.toLowerCase();
+
+        setOtpStatus(result.message, "success");
+
+    } catch (error) {
+
+        emailVerified = false;
+        verifiedName = "";
+        verifiedEmail = "";
+
+        setOtpStatus(error.message, "error");
+
+    } finally {
+
+        verifyOtpBtn.disabled = false;
+
+    }
+
+});
+
+// ==========================================
+// PRICE CALCULATION
+// ==========================================
+
+const baseRates = {
+    "Day": 4000,
+    "Night": 5000,
+    "Full day": 7000
+};
+
+function formatPeso(amount) {
+    return "₱" + amount.toLocaleString("en-PH");
+}
+
+function updatePriceSummary() {
+
+    const baseRate = baseRates[bookingType.value];
+
+    if (!baseRate) {
+
+        baseRateDisplay.textContent = "Select a booking type";
+        roomFeeDisplay.textContent = "₱0";
+        totalRateDisplay.textContent = "Select a booking type";
+
+        return;
+    }
+
+    const roomFee = addSecondRoom.checked ? 500 : 0;
+
+    baseRateDisplay.textContent = formatPeso(baseRate);
+    roomFeeDisplay.textContent = formatPeso(roomFee);
+
+    totalRateDisplay.textContent = formatPeso(
+        baseRate + roomFee
+    );
+}
+
+// ==========================================
+// BOOKING DURATIONS
+// ==========================================
+
+const durations = {
+    "Day": 10,
+    "Night": 10,
+    "Full day": 22
+};
+
+function localDateTimeValue(date) {
+
+    const year = date.getFullYear();
+
+    const month = String(
+        date.getMonth() + 1
+    ).padStart(2, "0");
+
+    const day = String(
+        date.getDate()
+    ).padStart(2, "0");
+
+    const hour = String(
+        date.getHours()
+    ).padStart(2, "0");
+
+    const minute = String(
+        date.getMinutes()
+    ).padStart(2, "0");
+
+    return `${year}-${month}-${day}T${hour}:${minute}`;
+}
+
+function updateMinimumDateTime() {
+    checkin.min = localDateTimeValue(new Date());
+}
+
+// ==========================================
+// AUTOMATIC CHECKOUT
+// ==========================================
+
+function calculateCheckout() {
+
+    checkoutPreview.value = "";
+
+    const selectedType = bookingType.value;
+    const selectedCheckin = checkin.value;
+
+    if (!selectedType || !selectedCheckin) {
+        return null;
+    }
+
+    const start = new Date(selectedCheckin);
+
+    if (Number.isNaN(start.getTime())) {
+        return null;
+    }
+
+    const hours = durations[selectedType];
+
+    const end = new Date(
+        start.getTime() + hours * 60 * 60 * 1000
+    );
+
+    checkoutPreview.value = localDateTimeValue(end);
+
+    return { start, end };
+}
+
+// ==========================================
+// DATE VALIDATION
+// ==========================================
+
+function showWarning(message) {
+
+    warning.textContent = message;
+    warning.style.display = "block";
+
+}
+
+function clearWarning() {
+
+    warning.textContent = "";
+    warning.style.display = "none";
+
+}
+
+function validateBooking() {
+
+    clearWarning();
+    updateMinimumDateTime();
+
+    const selectedType = bookingType.value;
+    const times = calculateCheckout();
+
+    if (!selectedType || !checkin.value) {
+
+        showWarning(
+            "Please select a booking type and check-in date and time."
+        );
+
+        return false;
+    }
+
+    if (!times) {
+
+        showWarning(
+            "Please select a valid check-in date and time."
+        );
+
+        return false;
+    }
+
+    const { start, end } = times;
+
+    if (start.getTime() < Date.now() - 60000) {
+
+        showWarning(
+            "Please choose a check-in time that is not in the past."
+        );
+
+        return false;
+    }
+
+    const current = new Date(start);
+    current.setHours(0, 0, 0, 0);
+
+    const lastDay = new Date(end);
+    lastDay.setHours(0, 0, 0, 0);
+
+    while (current <= lastDay) {
+
+        const y = current.getFullYear();
+
+        const m = String(
+            current.getMonth() + 1
+        ).padStart(2, "0");
+
+        const d = String(
+            current.getDate()
+        ).padStart(2, "0");
+
+        const dateText = `${y}-${m}-${d}`;
+
+        const checkoutMidnight =
+            current.getTime() === lastDay.getTime() &&
+            end.getHours() === 0 &&
+            end.getMinutes() === 0 &&
+            end.getSeconds() === 0 &&
+            end.getMilliseconds() === 0;
+
+        if (
+            !checkoutMidnight &&
+            unavailableDates.includes(dateText)
+        ) {
+
+            showWarning(
+                dateText +
+                " is unavailable. Please select another check-in time or date."
+            );
+
+            return false;
+        }
+
+        current.setDate(current.getDate() + 1);
+
+    }
+
+    return true;
+}
+
+// ==========================================
+// EVENT LISTENERS
+// ==========================================
+
+bookingType.addEventListener("change", function () {
+
+    calculateCheckout();
+    updatePriceSummary();
+    validateBooking();
+
+});
+
+addSecondRoom.addEventListener("change", function () {
+
+    updatePriceSummary();
+
+});
+
+checkin.addEventListener("change", function () {
+
+    calculateCheckout();
+    validateBooking();
+
+});
+
+// ==========================================
+// FORM SUBMISSION
+// ==========================================
+
+form.addEventListener("submit", function (event) {
+
+    if (!validateBooking()) {
+
+        event.preventDefault();
+
+        warning.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+        return;
+    }
+
+    if (
+        !emailVerified ||
+        verifiedName !== nameInput.value.trim() ||
+        verifiedEmail !== emailInput.value.trim().toLowerCase()
+    ) {
+
+        event.preventDefault();
+
+        setOtpStatus(
+            "Please verify your email with OTP before submitting your booking.",
+            "error"
+        );
+
+        document.querySelector(".otp-panel").scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+        return;
+    }
+
+});
+
+// ==========================================
+// INITIALIZE
+// ==========================================
+
+updateMinimumDateTime();
+updatePriceSummary();
+calculateCheckout();
+
+</script>
+</body>
+</html>

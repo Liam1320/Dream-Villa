@@ -1,0 +1,1739 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Villa | Admin Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --green: #205744;
+            --dark-green: #163e30;
+            --cream: #f6f7f1;
+            --light-green: #edf4ef;
+            --text: #26372f;
+            --muted: #718078;
+            --border: #e2e9e3;
+            --white: #ffffff;
+            --red: #c0392b;
+            --orange: #e67e22;
+            --blue: #2874a6;
+            --gold: #c5a46d;
+            --shadow: 0 8px 25px rgba(22, 62, 48, 0.07);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'DM Sans', Arial, sans-serif;
+            background: var(--cream);
+            color: var(--text);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button, input, select {
+            font-family: inherit;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: var(--dark-green);
+            color: white;
+            padding: 17px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 25px;
+        }
+
+        .brand h1 span {
+            color: var(--gold);
+        }
+
+        .brand p {
+            margin: 5px 0 0;
+            color: #dce9df;
+            font-size: 12px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* BUTTONS */
+
+        .button {
+            display: inline-block;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 7px;
+            background: white;
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+            text-align: center;
+        }
+
+        .button:hover {
+            opacity: .88;
+            transform: translateY(-1px);
+        }
+
+        .button.green {
+            background: var(--green);
+            color: white;
+        }
+
+        .button.red {
+            background: var(--red);
+            color: white;
+        }
+
+        .button.orange {
+            background: var(--orange);
+            color: white;
+        }
+
+        .button.blue {
+            background: var(--blue);
+            color: white;
+        }
+
+        .button:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* MAIN ADMIN LAYOUT */
+
+        .admin-layout {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        .admin-sidebar {
+            width: 245px;
+            flex-shrink: 0;
+            background: #163e30;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .sidebar-title {
+            font-size: 10px;
+            color: #b9cbbf;
+            letter-spacing: 2px;
+            margin: 10px 12px 18px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-link {
+            display: block;
+            width: 100%;
+            padding: 14px 15px;
+            margin-bottom: 7px;
+            border: 0;
+            border-radius: 8px;
+            background: transparent;
+            color: #e4eee7;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background: #2d6049;
+            color: white;
+        }
+
+        .sidebar-note {
+            margin: 30px 12px 0;
+            color: #b9cbbf;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .admin-content {
+            flex: 1;
+            min-width: 0;
+            padding: 28px;
+        }
+
+        .admin-page {
+            display: none;
+        }
+
+        .admin-page.active {
+            display: block;
+        }
+
+        .page-heading {
+            margin-bottom: 23px;
+        }
+
+        .page-heading h2 {
+            margin: 0 0 7px;
+            color: var(--green);
+            font-family: 'Playfair Display', serif;
+            font-size: 27px;
+        }
+
+        .page-heading p {
+            color: var(--muted);
+            margin: 0;
+            font-size: 13px;
+        }
+
+        /* ALERTS */
+
+        .alert {
+            padding: 13px 16px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .alert.success {
+            background: #e8f7ed;
+            color: #216b3a;
+            border: 1px solid #c6e8d0;
+        }
+
+        .alert.error {
+            background: #fdecea;
+            color: #a93226;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert.warning {
+            background: #fff4df;
+            color: #8a5a00;
+            border: 1px solid #f5dfad;
+        }
+
+        .alert.info {
+            background: #eaf3fb;
+            color: #245b86;
+            border: 1px solid #c9deef;
+        }
+
+        /* CARDS */
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 17px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--green);
+        }
+
+        .stat-card.pending-card {
+            border-top-color: var(--orange);
+        }
+
+        .stat-card.cancelled-card,
+        .stat-card.rejected-card {
+            border-top-color: var(--red);
+        }
+
+        .stat-card h3 {
+            color: var(--muted);
+            font-size: 12px;
+            margin: 0 0 12px;
+            font-weight: 500;
+        }
+
+        .stat-card .number {
+            color: var(--green);
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .stat-card p {
+            color: var(--muted);
+            font-size: 11px;
+            margin: 8px 0 0;
+        }
+
+        /* SECTIONS */
+
+        .section {
+            background: white;
+            border-radius: 13px;
+            padding: 24px;
+            margin-bottom: 22px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .section-header h3 {
+            margin: 0;
+            color: var(--green);
+            font-size: 19px;
+        }
+
+        .section-description {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        /* TABLES */
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th, td {
+            padding: 13px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            vertical-align: middle;
+        }
+
+        th {
+            background: var(--light-green);
+            color: var(--green);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        tbody tr:hover td {
+            background: #fafcf9;
+        }
+
+        .recent-table {
+            min-width: 650px;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--muted);
+            padding: 30px 15px;
+            font-size: 13px;
+        }
+
+        /* STATUS */
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .status.confirmed,
+        .status.paid,
+        .status.available {
+            background: #e5f5e9;
+            color: #24733c;
+        }
+
+        .status.pending,
+        .status.pending-payment {
+            background: #fff2d9;
+            color: #946200;
+        }
+
+        .status.rejected,
+        .status.cancelled,
+        .status.unpaid {
+            background: #fde8e7;
+            color: #a93226;
+        }
+
+        /* SEARCH AND FILTERS */
+
+        .search-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .search-filter input,
+        .search-filter select {
+            padding: 11px 12px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            font-size: 12px;
+            outline: none;
+            background: white;
+        }
+
+        .search-filter input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-filter select {
+            min-width: 160px;
+        }
+
+        /* ACTION BUTTONS */
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .action-buttons .button {
+            padding: 7px 9px;
+            font-size: 10px;
+        }
+
+        .action-buttons form {
+            margin: 0;
+        }
+
+        .receipt-link {
+            color: var(--blue);
+            font-weight: 700;
+            font-size: 11px;
+        }
+
+        .receipt-link:hover {
+            text-decoration: underline;
+        }
+
+        /* UNAVAILABLE DATES */
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 7px;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            font-size: 13px;
+            outline: none;
+            background: white;
+        }
+
+        .form-group input:focus {
+            border-color: var(--green);
+        }
+
+        .form-inline {
+            display: flex;
+            align-items: end;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .form-inline .form-group {
+            flex: 1;
+            min-width: 180px;
+            margin-bottom: 0;
+        }
+
+        .date-item {
+            background: #fff0ed;
+            color: #a93226;
+            border: 1px solid #f5c6cb;
+            padding: 9px 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+        }
+
+        .date-item form {
+            margin: 0;
+        }
+
+        .date-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        /* MODAL */
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 550px;
+            border-radius: 14px;
+            padding: 25px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: var(--green);
+            font-family: 'Playfair Display', serif;
+            font-size: 21px;
+        }
+
+        .close-modal {
+            border: none;
+            background: transparent;
+            font-size: 25px;
+            cursor: pointer;
+            color: var(--muted);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 11px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+        }
+
+        .detail-row span {
+            color: var(--muted);
+        }
+
+        .detail-row strong {
+            color: var(--green);
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
+            .admin-layout {
+                display: block;
+            }
+
+            .admin-sidebar {
+                width: 100%;
+                padding: 12px;
+                display: flex;
+                gap: 7px;
+                overflow-x: auto;
+            }
+
+            .sidebar-title,
+            .sidebar-note {
+                display: none;
+            }
+
+            .sidebar-link {
+                white-space: nowrap;
+                width: auto;
+                margin: 0;
+                flex-shrink: 0;
+            }
+
+            .admin-content {
+                padding: 18px 14px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 16px 4%;
+            }
+
+            .brand h1 {
+                font-size: 21px;
+            }
+
+            .header-actions {
+                width: 100%;
+            }
+
+            .header-actions .button {
+                flex: 1;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .section {
+                padding: 17px;
+            }
+
+            .form-inline {
+                display: block;
+            }
+
+            .form-inline .form-group {
+                margin-bottom: 12px;
+            }
+
+            .detail-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .detail-row strong {
+                text-align: left;
+            }
+
+            .modal-actions {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #bookingModal,
+            #bookingModal * {
+                visibility: visible;
+            }
+
+            #bookingModal {
+                display: block !important;
+                position: absolute;
+                inset: 0;
+                background: white;
+            }
+
+            .modal-content {
+                max-height: none;
+                overflow: visible;
+                box-shadow: none;
+                max-width: 100%;
+            }
+
+            .modal-actions,
+            .close-modal {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="brand">
+        <h1>DREAM <span>VILLA</span></h1>
+        <p>Administration and Reservation Management</p>
+    </div>
+
+    <div class="header-actions">
+
+        <a href="{{ url_for('export_bookings') }}" class="button">
+            Download CSV
+        </a>
+
+        <a href="{{ url_for('home') }}" class="button">
+            View Website
+        </a>
+
+        <form method="POST" action="{{ url_for('logout') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <button type="submit"
+                    class="button red"
+                    onclick="return confirm('Are you sure you want to logout?');">
+                Logout
+            </button>
+        </form>
+
+    </div>
+
+</header>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="admin-sidebar">
+
+        <div class="sidebar-title">ADMIN MENU</div>
+
+        <button type="button"
+                class="sidebar-link active"
+                onclick="showAdminPage('overview', this)">
+            Overview
+        </button>
+
+        <button type="button"
+                class="sidebar-link"
+                onclick="showAdminPage('bookings', this)">
+            Booking Management
+        </button>
+
+        <button type="button"
+                class="sidebar-link"
+                onclick="showAdminPage('availability', this)">
+            Unavailable Dates
+        </button>
+
+        <button type="button"
+                class="sidebar-link"
+                onclick="showAdminPage('activity', this)">
+            Activity Logs
+        </button>
+
+        <div class="sidebar-note">
+            Dream Villa Private Resort<br>
+            Admin Management Panel
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+
+    <div class="admin-content">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% set ns = namespace(
+            confirmed=0,
+            cancelled=0,
+            paid=0,
+            payment_pending=0,
+            rejected=0
+        ) %}
+
+        {% for booking in bookings %}
+            {% set booking_status = booking.status|default('Pending')|lower %}
+            {% set payment_status = booking.payment_status|default('Pending')|lower %}
+
+            {% if booking_status == 'confirmed' %}
+                {% set ns.confirmed = ns.confirmed + 1 %}
+            {% endif %}
+
+            {% if booking_status == 'cancelled' %}
+                {% set ns.cancelled = ns.cancelled + 1 %}
+            {% endif %}
+
+            {% if payment_status == 'paid' %}
+                {% set ns.paid = ns.paid + 1 %}
+            {% elif payment_status == 'pending' %}
+                {% set ns.payment_pending = ns.payment_pending + 1 %}
+            {% elif payment_status == 'rejected' %}
+                {% set ns.rejected = ns.rejected + 1 %}
+            {% endif %}
+        {% endfor %}
+
+        <!-- OVERVIEW PAGE -->
+
+        <section id="overview" class="admin-page active">
+
+            <div class="page-heading">
+                <h2>Dashboard Overview</h2>
+                <p>Welcome to your Dream Villa administration dashboard.</p>
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <h3>Confirmed Bookings</h3>
+                    <div class="number">{{ ns.confirmed }}</div>
+                    <p>Successfully confirmed reservations</p>
+                </div>
+
+                <div class="stat-card cancelled-card">
+                    <h3>Cancelled Bookings</h3>
+                    <div class="number">{{ ns.cancelled }}</div>
+                    <p>Bookings that were cancelled</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Paid Payments</h3>
+                    <div class="number">{{ ns.paid }}</div>
+                    <p>Payments verified by admin</p>
+                </div>
+
+                <div class="stat-card pending-card">
+                    <h3>Pending Payments</h3>
+                    <div class="number">{{ ns.payment_pending }}</div>
+                    <p>Waiting for payment verification</p>
+                </div>
+
+                <div class="stat-card rejected-card">
+                    <h3>Rejected Payments</h3>
+                    <div class="number">{{ ns.rejected }}</div>
+                    <p>Payments that need attention</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Total Bookings</h3>
+                    <div class="number">{{ bookings|length }}</div>
+                    <p>All customer reservations</p>
+                </div>
+
+            </div>
+
+            <section class="section">
+
+                <div class="section-header">
+                    <div>
+                        <h3>Recent Bookings</h3>
+                        <div class="section-description">
+                            Latest customer reservations.
+                        </div>
+                    </div>
+
+                    <button type="button"
+                            class="button green"
+                            onclick="showAdminPage('bookings', document.querySelectorAll('.sidebar-link')[1])">
+                        Manage Bookings
+                    </button>
+                </div>
+
+                <div class="table-wrap">
+
+                    <table class="recent-table">
+
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Customer</th>
+                                <th>Booking Type</th>
+                                <th>Room</th>
+                                <th>Check-in</th>
+                                <th>Total Rate</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for booking in bookings[:5] %}
+
+                            <tr>
+                                <td>#{{ booking.id }}</td>
+                                <td>{{ booking.name }}</td>
+                                <td>{{ booking.booking_type }}</td>
+                                <td>{{ booking.room }}</td>
+                                <td>{{ booking.checkin }}</td>
+                                <td>₱{{ "{:,.2f}".format(booking.rate|float) }}</td>
+                                <td>
+                                    <span class="status {{ booking.status|default('Pending')|lower }}">
+                                        {{ booking.status|default('Pending') }}
+                                    </span>
+                                </td>
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+                                <td colspan="7" class="empty-state">
+                                    No bookings available yet.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </section>
+
+        <!-- BOOKING MANAGEMENT PAGE -->
+
+        <section id="bookings" class="admin-page">
+
+            <div class="page-heading">
+                <h2>Booking Management</h2>
+                <p>Review reservations, verify payments, and manage booking status.</p>
+            </div>
+
+            <section class="section">
+
+                <div class="section-header">
+                    <div>
+                        <h3>All Customer Bookings</h3>
+                        <div class="section-description">
+                            Search and filter your customer reservations.
+                        </div>
+                    </div>
+
+                    <a href="{{ url_for('export_bookings') }}" class="button green">
+                        Export CSV
+                    </a>
+                </div>
+
+                <div class="search-filter">
+
+                    <input type="text"
+                           id="searchInput"
+                           placeholder="Search customer, email, or booking ID...">
+
+                    <select id="statusFilter">
+                        <option value="">All Booking Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+
+                    <select id="paymentFilter">
+                        <option value="">All Payment Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="paid">Paid</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+
+                </div>
+
+                <div class="table-wrap">
+
+                    <table id="bookingsTable">
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Email</th>
+                                <th>Booking Type</th>
+                                <th>Room</th>
+                                <th>Check-in</th>
+                                <th>Check-out</th>
+                                <th>Guests</th>
+                                <th>Total Rate</th>
+                                <th>Payment</th>
+                                <th>Booking Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for booking in bookings %}
+
+                            <tr class="booking-row"
+                                data-status="{{ booking.status|default('Pending')|lower }}"
+                                data-payment="{{ booking.payment_status|default('Pending')|lower }}">
+
+                                <td>#{{ booking.id }}</td>
+                                <td>{{ booking.name }}</td>
+                                <td>{{ booking.email }}</td>
+                                <td>{{ booking.booking_type }}</td>
+                                <td>{{ booking.room }}</td>
+                                <td>{{ booking.checkin }}</td>
+                                <td>{{ booking.checkout }}</td>
+                                <td>{{ booking.guests }}</td>
+                                <td>₱{{ "{:,.2f}".format(booking.rate|float) }}</td>
+
+                                <td>
+                                    <span class="status {{ booking.payment_status|default('Pending')|lower }}">
+                                        {{ booking.payment_status|default('Pending') }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="status {{ booking.status|default('Pending')|lower }}">
+                                        {{ booking.status|default('Pending') }}
+                                    </span>
+                                </td>
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <button type="button"
+                                                class="button"
+                                                data-id="{{ booking.id }}"
+                                                data-name="{{ booking.name|e }}"
+                                                data-email="{{ booking.email|e }}"
+                                                data-type="{{ booking.booking_type|e }}"
+                                                data-room="{{ booking.room|e }}"
+                                                data-checkin="{{ booking.checkin|e }}"
+                                                data-checkout="{{ booking.checkout|e }}"
+                                                data-guests="{{ booking.guests }}"
+                                                data-rate="{{ booking.rate }}"
+                                                data-room-fee="{{ 500 if booking.room == 'Room 1 + Room 2' else 0 }}"
+                                                data-payment="{{ booking.payment_status|default('Pending')|e }}"
+                                                data-status="{{ booking.status|default('Pending')|e }}"
+                                                data-reference="{{ booking.gcash_reference|default('Not provided')|e }}"
+                                                onclick="showBookingDetails(this)">
+                                            View Details
+                                        </button>
+
+                                        {% if booking.receipt_filename %}
+
+                                            <a class="button blue"
+                                               href="{{ url_for('view_payment_receipt', booking_id=booking.id) }}"
+                                               target="_blank">
+                                                View Receipt
+                                            </a>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                    {% if booking.status|default('Pending')|lower == 'pending' %}
+
+                                        <div class="action-buttons">
+
+                                            {% if booking.payment_status|default('Pending')|lower != 'paid' %}
+
+                                                <form method="POST"
+                                                      action="{{ url_for('update_payment_status', booking_id=booking.id) }}"
+                                                      onsubmit="return confirm('Mark this payment as Paid?');">
+
+                                                    <input type="hidden"
+                                                           name="csrf_token"
+                                                           value="{{ csrf_token() }}">
+
+                                                    <input type="hidden"
+                                                           name="payment_decision"
+                                                           value="Paid">
+
+                                                    <button type="submit" class="button green">
+                                                        Mark Paid
+                                                    </button>
+
+                                                </form>
+
+                                            {% endif %}
+
+                                            {% if booking.payment_status|default('Pending')|lower != 'rejected' %}
+
+                                                <form method="POST"
+                                                      action="{{ url_for('update_payment_status', booking_id=booking.id) }}"
+                                                      onsubmit="return confirm('Reject this payment?');">
+
+                                                    <input type="hidden"
+                                                           name="csrf_token"
+                                                           value="{{ csrf_token() }}">
+
+                                                    <input type="hidden"
+                                                           name="payment_decision"
+                                                           value="Rejected">
+
+                                                    <button type="submit" class="button red">
+                                                        Reject Payment
+                                                    </button>
+
+                                                </form>
+
+                                            {% endif %}
+
+                                            <form method="POST"
+                                                  action="{{ url_for('confirm_booking', booking_id=booking.id) }}"
+                                                  onsubmit="return confirm('Confirm this booking?');">
+
+                                                <input type="hidden"
+                                                       name="csrf_token"
+                                                       value="{{ csrf_token() }}">
+
+                                                <button type="submit"
+                                                        class="button green"
+                                                        {% if booking.payment_status|default('Pending')|lower != 'paid' or not booking.receipt_filename %}
+                                                        disabled
+                                                        title="Payment must be Paid and receipt must be uploaded"
+                                                        {% endif %}>
+                                                    Confirm Booking
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+                                    {% endif %}
+
+                                    {% if booking.status|default('Pending')|lower in ['pending', 'confirmed'] %}
+
+                                        <div class="action-buttons">
+
+                                            <form method="POST"
+                                                  action="{{ url_for('cancel_booking', booking_id=booking.id) }}"
+                                                  onsubmit="return confirm('Are you sure you want to cancel booking #{{ booking.id }}? This will release the reserved date.');">
+
+                                                <input type="hidden"
+                                                       name="csrf_token"
+                                                       value="{{ csrf_token() }}">
+
+                                                <button type="submit" class="button red">
+                                                    Cancel Booking
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+                                <td colspan="12" class="empty-state">
+                                    No bookings found.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </section>
+
+        <!-- UNAVAILABLE DATES PAGE -->
+
+        <section id="availability" class="admin-page">
+
+            <div class="page-heading">
+                <h2>Unavailable Dates</h2>
+                <p>Manage the dates when customers cannot make reservations.</p>
+            </div>
+
+            <section class="section">
+
+                <div class="section-header">
+                    <div>
+                        <h3>Block a Date</h3>
+                        <div class="section-description">
+                            Add dates when the resort is closed or unavailable.
+                        </div>
+                    </div>
+                </div>
+
+                <form method="POST"
+                      action="{{ url_for('add_unavailable') }}"
+                      class="form-inline">
+
+                    <input type="hidden"
+                           name="csrf_token"
+                           value="{{ csrf_token() }}">
+
+                    <div class="form-group">
+                        <label for="unavailable_date">Select Date</label>
+                        <input type="date"
+                               id="unavailable_date"
+                               name="unavailable_date"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reason">Reason (Optional)</label>
+                        <input type="text"
+                               id="reason"
+                               name="reason"
+                               placeholder="e.g. Maintenance">
+                    </div>
+
+                    <button type="submit" class="button green">
+                        Add Unavailable Date
+                    </button>
+
+                </form>
+
+            </section>
+
+            <section class="section">
+
+                <div class="section-header">
+                    <div>
+                        <h3>Blocked Dates List</h3>
+                        <div class="section-description">
+                            Dates currently marked unavailable.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Availability</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for date in unavailable_dates %}
+
+                            <tr>
+
+                                <td>{{ date.unavailable_date }}</td>
+
+                                <td>
+                                    <span class="status rejected">
+                                        Unavailable
+                                    </span>
+                                </td>
+
+                                <td>
+
+                                    <form method="POST"
+                                          action="{{ url_for('delete_unavailable', date_id=date.id) }}"
+                                          onsubmit="return confirm('Remove this unavailable date?');">
+
+                                        <input type="hidden"
+                                               name="csrf_token"
+                                               value="{{ csrf_token() }}">
+
+                                        <button type="submit" class="button red">
+                                            Remove
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+                                <td colspan="3" class="empty-state">
+                                    No unavailable dates added.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </section>
+
+        <!-- ACTIVITY LOGS PAGE -->
+
+        <section id="activity" class="admin-page">
+
+            <div class="page-heading">
+                <h2>Admin Activity Logs</h2>
+                <p>Review actions performed in the administration dashboard.</p>
+            </div>
+
+            <section class="section">
+
+                <div class="section-header">
+                    <div>
+                        <h3>Activity History</h3>
+                        <div class="section-description">
+                            Records of admin actions and booking updates.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Date and Time</th>
+                                <th>Admin</th>
+                                <th>Action</th>
+                                <th>Details</th>
+                                <th>Booking ID</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for log in activity_logs %}
+
+                            <tr>
+                                <td>{{ log.created_at }}</td>
+                                <td>{{ log.admin_name }}</td>
+                                <td>{{ log.action }}</td>
+                                <td>{{ log.details }}</td>
+
+                                <td>
+                                    {% if log.booking_id %}
+                                        #{{ log.booking_id }}
+                                    {% else %}
+                                        —
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+                                <td colspan="5" class="empty-state">
+                                    No activity logs available.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </section>
+
+        <!-- BOOKING DETAILS MODAL -->
+
+        <div class="modal" id="bookingModal">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h2>Booking Details</h2>
+
+                    <button type="button"
+                            class="close-modal"
+                            onclick="closeBookingDetails()">
+                        ×
+                    </button>
+                </div>
+
+                <div class="detail-row">
+                    <span>Booking ID</span>
+                    <strong id="detailId"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Customer Name</span>
+                    <strong id="detailName"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Email</span>
+                    <strong id="detailEmail"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Room Selection</span>
+                    <strong id="detailRoom"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Booking Type</span>
+                    <strong id="detailType"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Check-in</span>
+                    <strong id="detailCheckin"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Check-out</span>
+                    <strong id="detailCheckout"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Number of Guests</span>
+                    <strong id="detailGuests"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Base Booking Rate</span>
+                    <strong id="detailBaseRate"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Room 2 Additional Fee</span>
+                    <strong id="detailRoomFee"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Total Booking Rate</span>
+                    <strong id="detailRate"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Payment Status</span>
+                    <strong id="detailPayment"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Booking Status</span>
+                    <strong id="detailStatus"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>GCash Reference</span>
+                    <strong id="detailReference"></strong>
+                </div>
+
+                <div class="modal-actions">
+
+                    <button type="button"
+                            class="button green"
+                            onclick="window.print()">
+                        Print Details
+                    </button>
+
+                    <button type="button"
+                            class="button"
+                            onclick="closeBookingDetails()">
+                        Close
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <footer class="footer">
+            <p>© 2026 Dream Villa Private Resort</p>
+            <p>Admin Dashboard | Relax • Enjoy</p>
+        </footer>
+
+    </div>
+
+</div>
+
+<script>
+    /* =====================================
+       ADMIN SIDEBAR NAVIGATION
+    ===================================== */
+
+    function showAdminPage(pageId, button) {
+
+        document.querySelectorAll('.admin-page').forEach(function(page) {
+            page.classList.remove('active');
+        });
+
+        const selectedPage = document.getElementById(pageId);
+
+        if (selectedPage) {
+            selectedPage.classList.add('active');
+        }
+
+        document.querySelectorAll('.sidebar-link').forEach(function(link) {
+            link.classList.remove('active');
+        });
+
+        if (button) {
+            button.classList.add('active');
+        }
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+
+    /* =====================================
+       BOOKING DETAILS MODAL
+    ===================================== */
+
+    function showBookingDetails(button) {
+
+        const data = button.dataset;
+
+        document.getElementById("detailId").textContent =
+            "#" + data.id;
+
+        document.getElementById("detailName").textContent =
+            data.name;
+
+        document.getElementById("detailEmail").textContent =
+            data.email;
+
+        document.getElementById("detailRoom").textContent =
+            data.room;
+
+        document.getElementById("detailType").textContent =
+            data.type;
+
+        document.getElementById("detailCheckin").textContent =
+            data.checkin;
+
+        document.getElementById("detailCheckout").textContent =
+            data.checkout;
+
+        document.getElementById("detailGuests").textContent =
+            data.guests;
+
+        const totalRate = parseFloat(data.rate) || 0;
+        const roomFee = parseFloat(data.roomFee) || 0;
+        const baseRate = totalRate - roomFee;
+
+        document.getElementById("detailBaseRate").textContent =
+            "₱" + baseRate.toLocaleString("en-PH", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+
+        document.getElementById("detailRoomFee").textContent =
+            "₱" + roomFee.toLocaleString("en-PH", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+
+        document.getElementById("detailRate").textContent =
+            "₱" + totalRate.toLocaleString("en-PH", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+
+        document.getElementById("detailPayment").textContent =
+            data.payment;
+
+        document.getElementById("detailStatus").textContent =
+            data.status;
+
+        document.getElementById("detailReference").textContent =
+            data.reference;
+
+        document.getElementById("bookingModal").style.display =
+            "flex";
+    }
+
+
+    function closeBookingDetails() {
+
+        document.getElementById("bookingModal").style.display =
+            "none";
+    }
+
+
+    window.addEventListener("click", function(event) {
+
+        const modal = document.getElementById("bookingModal");
+
+        if (event.target === modal) {
+            closeBookingDetails();
+        }
+    });
+
+
+    document.addEventListener("keydown", function(event) {
+
+        if (event.key === "Escape") {
+            closeBookingDetails();
+        }
+    });
+
+
+    /* =====================================
+       BOOKING SEARCH AND FILTER
+    ===================================== */
+
+    const searchInput = document.getElementById("searchInput");
+    const statusFilter = document.getElementById("statusFilter");
+    const paymentFilter = document.getElementById("paymentFilter");
+
+    function filterBookings() {
+
+        const searchValue =
+            searchInput.value.toLowerCase().trim();
+
+        const selectedStatus =
+            statusFilter.value.toLowerCase();
+
+        const selectedPayment =
+            paymentFilter.value.toLowerCase();
+
+        const rows =
+            document.querySelectorAll(".booking-row");
+
+        rows.forEach(function(row) {
+
+            const rowText = row.textContent.toLowerCase();
+
+            const bookingStatus =
+                row.dataset.status || "";
+
+            const paymentStatus =
+                row.dataset.payment || "";
+
+            const matchesSearch =
+                rowText.includes(searchValue);
+
+            const matchesStatus =
+                selectedStatus === "" ||
+                bookingStatus === selectedStatus;
+
+            const matchesPayment =
+                selectedPayment === "" ||
+                paymentStatus === selectedPayment;
+
+            row.style.display =
+                matchesSearch && matchesStatus && matchesPayment
+                    ? ""
+                    : "none";
+        });
+    }
+
+    searchInput.addEventListener("input", filterBookings);
+    statusFilter.addEventListener("change", filterBookings);
+    paymentFilter.addEventListener("change", filterBookings);
+
+
+    /* =====================================
+       UNAVAILABLE DATE VALIDATION
+    ===================================== */
+
+    const unavailableDateInput =
+        document.getElementById("unavailable_date");
+
+    if (unavailableDateInput) {
+
+        const today = new Date();
+
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, "0");
+        const day = String(today.getDate()).padStart(2, "0");
+
+        unavailableDateInput.min =
+            `${year}-${month}-${day}`;
+    }
+
+
+    /* =====================================
+       FORM VALIDATION
+    ===================================== */
+
+    document.querySelectorAll("form").forEach(function(form) {
+
+        form.addEventListener("submit", function(event) {
+
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                form.reportValidity();
+            }
+
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

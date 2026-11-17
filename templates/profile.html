@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Dream Villa</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --green: #204d3c;
+            --dark-green: #153729;
+            --cream: #f7f6f0;
+            --gold: #c5a46d;
+            --text: #26372f;
+            --muted: #7a877f;
+            --border: #e7e9e1;
+            --shadow: 0 8px 30px rgba(25, 55, 40, .06);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .topbar {
+            background: var(--dark-green);
+            color: white;
+            padding: 17px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .brand span {
+            color: var(--gold);
+        }
+
+        .top-link {
+            color: white;
+            border: 1px solid rgba(255,255,255,.3);
+            border-radius: 7px;
+            padding: 10px 15px;
+            font-size: 13px;
+            transition: .2s;
+        }
+
+        .top-link:hover {
+            background: rgba(255,255,255,.1);
+        }
+
+        .page {
+            width: 92%;
+            max-width: 850px;
+            margin: 35px auto 60px;
+        }
+
+        .heading {
+            margin-bottom: 22px;
+        }
+
+        .heading small {
+            color: #9a7a48;
+            letter-spacing: 2px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .heading h1 {
+            color: var(--green);
+            font: 700 32px 'Playfair Display', serif;
+            margin: 8px 0;
+        }
+
+        .heading p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .alert {
+            padding: 13px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+
+        .alert.success {
+            background: #e9f5ec;
+            color: #24713b;
+        }
+
+        .alert.error {
+            background: #fbe9e7;
+            color: #a93226;
+        }
+
+        .alert.warning {
+            background: #fff3dc;
+            color: #8a5a00;
+        }
+
+        .alert.info {
+            background: #eaf3fb;
+            color: #245b86;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 27px;
+            margin-bottom: 22px;
+            box-shadow: var(--shadow);
+        }
+
+        .card h2 {
+            color: var(--green);
+            font: 700 22px 'Playfair Display', serif;
+            margin: 0 0 7px;
+        }
+
+        .card .description {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 22px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #dce4dc;
+            border-radius: 7px;
+            font: 14px 'DM Sans', sans-serif;
+            background: white;
+            color: var(--text);
+            transition: .2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(32,77,60,.08);
+        }
+
+        .help {
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.6;
+            margin-top: 7px;
+        }
+
+        .password-rules {
+            background: #f7f8f4;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 13px 16px;
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .password-rules p {
+            margin: 0 0 7px;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        .password-rules ul {
+            padding-left: 18px;
+            margin: 0;
+            line-height: 1.9;
+        }
+
+        .submit {
+            border: 0;
+            border-radius: 7px;
+            background: var(--green);
+            color: white;
+            padding: 13px 20px;
+            font: 700 13px 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .submit:hover {
+            background: var(--dark-green);
+            transform: translateY(-1px);
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .back {
+            display: inline-block;
+            color: var(--green);
+            border: 1px solid var(--green);
+            border-radius: 7px;
+            padding: 12px 17px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        .back:hover {
+            background: var(--green);
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .topbar {
+                padding: 16px 5%;
+            }
+
+            .page {
+                width: 94%;
+                margin-top: 24px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .heading h1 {
+                font-size: 27px;
+            }
+
+            .actions > * {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="{{ url_for('home') }}" class="brand">
+        DREAM <span>VILLA</span>
+    </a>
+
+    <a href="{{ url_for('dashboard') }}" class="top-link">
+        ← Back to Dashboard
+    </a>
+</header>
+
+<main class="page">
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- PAGE HEADING -->
+    <section class="heading">
+        <small>Customer Account</small>
+        <h1>My Profile</h1>
+        <p>
+            View and update your Dream Villa account information
+            and password.
+        </p>
+    </section>
+
+    <!-- PERSONAL INFORMATION -->
+    <section class="card">
+
+        <h2>Personal Information</h2>
+
+        <p class="description">
+            Update the name and email address connected to your account.
+        </p>
+
+        <form method="POST" action="{{ url_for('profile') }}">
+
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+            <input
+                type="hidden"
+                name="action"
+                value="update_profile"
+            >
+
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+
+                <input
+                    type="text"
+                    id="fullname"
+                    name="fullname"
+                    maxlength="100"
+                    value="{{ user.fullname }}"
+                    autocomplete="name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    maxlength="100"
+                    value="{{ user.email }}"
+                    autocomplete="email"
+                    required
+                >
+
+                <p class="help">
+                    Your booking history will remain connected
+                    to your account when you change this email.
+                </p>
+            </div>
+
+            <button type="submit" class="submit">
+                Save Profile Changes
+            </button>
+
+        </form>
+
+    </section>
+
+    <!-- CHANGE PASSWORD -->
+    <section class="card">
+
+        <h2>Change Password</h2>
+
+        <p class="description">
+            Enter your current password before choosing a new one.
+        </p>
+
+        <form
+            method="POST"
+            action="{{ url_for('profile') }}"
+            id="passwordForm"
+        >
+
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+            <input
+                type="hidden"
+                name="action"
+                value="change_password"
+            >
+
+            <div class="form-group">
+                <label for="current_password">
+                    Current Password
+                </label>
+
+                <input
+                    type="password"
+                    id="current_password"
+                    name="current_password"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="new_password">
+                    New Password
+                </label>
+
+                <input
+                    type="password"
+                    id="new_password"
+                    name="new_password"
+                    minlength="8"
+                    pattern="(?=.*[A-Za-z])(?=.*[0-9]).{8,}"
+                    title="Password must contain at least 8 characters, including at least one letter and one number."
+                    autocomplete="new-password"
+                    required
+                >
+
+                <div class="password-rules">
+                    <p>Password Requirements:</p>
+                    <ul>
+                        <li>At least 8 characters long</li>
+                        <li>At least one letter (A-Z or a-z)</li>
+                        <li>At least one number (0-9)</li>
+                        <li>Uppercase and lowercase letters are accepted</li>
+                        <li>Numbers-only passwords are not allowed</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">
+                    Confirm New Password
+                </label>
+
+                <input
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    minlength="8"
+                    autocomplete="new-password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="submit">
+                Change Password
+            </button>
+
+        </form>
+
+    </section>
+
+    <div class="actions">
+        <a href="{{ url_for('dashboard') }}" class="back">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+</main>
+
+<footer class="footer">
+    © 2026 Dream Villa Private Resort. All rights reserved.
+</footer>
+
+<script>
+    const passwordForm = document.getElementById("passwordForm");
+    const newPassword = document.getElementById("new_password");
+    const confirmPassword = document.getElementById("confirm_password");
+
+    passwordForm.addEventListener("submit", function(event) {
+        const password = newPassword.value;
+
+        const hasLetter = /[A-Za-z]/.test(password);
+        const hasNumber = /[0-9]/.test(password);
+
+        if (password.length < 8 || !hasLetter || !hasNumber) {
+            event.preventDefault();
+
+            alert(
+                "Your new password must have at least 8 characters, " +
+                "one letter, and one number."
+            );
+
+            newPassword.focus();
+            return;
+        }
+
+        if (password !== confirmPassword.value) {
+            event.preventDefault();
+
+            alert("Your new passwords do not match.");
+
+            confirmPassword.focus();
+        }
+    });
+</script>
+
+</body>
+</html>

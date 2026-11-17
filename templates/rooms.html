@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Our Rooms | Dream Villa</title>
+
+    <!-- CSS FILES -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='pages.css') }}">
+
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- NAVIGATION BAR -->
+<header class="navbar page-navbar">
+    <div class="nav-container">
+
+        <a href="{{ url_for('home') }}" class="brand">
+            <img src="{{ url_for('static', filename='images/dream-villa-logo.jpeg') }}" alt="Dream Villa logo">
+            <span>Dream Villa</span>
+        </a>
+
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a class="active" href="{{ url_for('rooms') }}">Rooms</a>
+            <a href="{{ url_for('amenities') }}">Amenities</a>
+            <a href="{{ url_for('virtual_tour') }}">Virtual Tour</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+
+            <!-- CUSTOMER AND ADMIN NAVIGATION -->
+            {% if session.get('user_id') %}
+
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+
+                <!-- ADMIN ACCOUNT ONLY -->
+                {% if session.get('user_role') == 'admin' %}
+                    <a href="{{ url_for('admin') }}">Admin Dashboard</a>
+                {% endif %}
+
+            {% else %}
+
+                <!-- GUEST LOGIN -->
+                <a href="{{ url_for('login') }}">Login</a>
+
+            {% endif %}
+
+            <!-- BOOKING BUTTON -->
+            <a class="book-btn" href="{{ url_for('booking') }}">Book Now</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<!-- MAIN CONTENT -->
+<main class="inner-page">
+
+    <!-- PAGE HEADING -->
+    <section class="page-heading">
+        <p class="section-label">YOUR HOME AWAY FROM HOME</p>
+
+        <h1>Explore Our Rooms</h1>
+
+        <p>
+            Take a look at the rooms available at Dream Villa.
+        </p>
+    </section>
+
+
+    <!-- ROOMS GRID -->
+    <div class="room-page-grid">
+
+        <!-- ROOM 1 -->
+        <article class="room-page-card">
+
+            <img
+                src="{{ url_for('static', filename='images/room-1-cover.jpg') }}"
+                alt="Room 1"
+            >
+
+            <div class="room-page-content">
+
+                <p class="section-label">
+                    DREAM VILLA ACCOMMODATION
+                </p>
+
+                <h2>Room 1</h2>
+
+                <p>
+                    Explore the comfort and features of Room 1
+                    through its photo and video tour.
+                </p>
+
+                <video
+                    controls
+                    preload="metadata"
+                    playsinline
+                    poster="{{ url_for('static', filename='images/room-1-cover.jpg') }}"
+                >
+                    <source
+                        src="{{ url_for('static', filename='videos/room-1.mp4') }}"
+                        type="video/mp4"
+                    >
+
+                    Your browser does not support video playback.
+                </video>
+
+            </div>
+
+        </article>
+
+
+        <!-- ROOM 2 -->
+        <article class="room-page-card">
+
+            <img
+                src="{{ url_for('static', filename='images/room-2-cover.jpg') }}"
+                alt="Room 2"
+            >
+
+            <div class="room-page-content">
+
+                <p class="section-label">
+                    DREAM VILLA ACCOMMODATION
+                </p>
+
+                <h2>Room 2</h2>
+
+                <p>
+                    Discover another relaxing space at Dream Villa.
+                    Watch the video to see more of Room 2.
+                </p>
+
+                <video
+                    controls
+                    preload="metadata"
+                    playsinline
+                    poster="{{ url_for('static', filename='images/room-2-cover.jpg') }}"
+                >
+                    <source
+                        src="{{ url_for('static', filename='videos/room-2.mp4') }}"
+                        type="video/mp4"
+                    >
+
+                    Your browser does not support video playback.
+                </video>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer class="page-footer">
+
+    <h2>Dream Villa</h2>
+
+    <div class="footer-links">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('rooms') }}">Rooms</a>
+        <a href="{{ url_for('amenities') }}">Amenities</a>
+        <a href="{{ url_for('virtual_tour') }}">Virtual Tour</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('booking') }}">Booking</a>
+    </div>
+
+    <p class="copyright">
+        © 2026 Dream Villa Resort. All Rights Reserved.
+    </p>
+
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Dream Villa</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7f2;
+            color: #26352a;
+        }
+
+        .card {
+            max-width: 420px;
+            margin: 65px auto;
+            padding: 35px 28px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px #00000010;
+        }
+
+        .brand {
+            text-align: center;
+            color: #39744b;
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-size: 21px;
+            margin-bottom: 22px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #687469;
+            font-size: 14px;
+        }
+
+        label {
+            display: block;
+            margin: 18px 0 7px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d7ded7;
+            border-radius: 7px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            outline: 2px solid #39744b;
+            border-color: #39744b;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .forgot-password a {
+            color: #39744b;
+            font-size: 13px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .forgot-password a:hover {
+            color: #2d5e3c;
+            text-decoration: underline;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 23px;
+            padding: 13px;
+            border: 0;
+            border-radius: 7px;
+            background: #39744b;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #2d5e3c;
+        }
+
+        .message {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #fff0f0;
+            color: #943333;
+            border: 1px solid #f0caca;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .message.success {
+            background: #e5f5e9;
+            color: #24733c;
+            border: 1px solid #b9dfc3;
+        }
+
+        .message.warning {
+            background: #fff6df;
+            color: #856404;
+            border: 1px solid #f0dfa7;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 22px;
+            line-height: 1.7;
+        }
+
+        .links a {
+            color: #39744b;
+            text-decoration: underline;
+        }
+
+        .links a:hover {
+            color: #2d5e3c;
+        }
+
+        .links p {
+            margin-top: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                width: auto;
+                margin: 30px 16px;
+                padding: 28px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="card">
+
+        <div class="brand">DREAM VILLA</div>
+
+        <h1>Welcome Back</h1>
+
+        <p style="text-align: center;">
+            Log in to your account.
+        </p>
+
+        <!-- FLASH MESSAGES -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}">
+
+            <!-- CSRF SECURITY TOKEN -->
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+            <!-- EMAIL ADDRESS -->
+            <label for="email">Email Address</label>
+
+            <input
+                id="email"
+                type="email"
+                name="email"
+                autocomplete="email"
+                required
+            >
+
+            <!-- PASSWORD -->
+            <label for="password">Password</label>
+
+            <input
+                id="password"
+                type="password"
+                name="password"
+                autocomplete="current-password"
+                required
+            >
+
+            <!-- FORGOT PASSWORD LINK -->
+            <div class="forgot-password">
+                <a href="{{ url_for('forgot_password') }}">
+                    Forgot Password?
+                </a>
+            </div>
+
+            <!-- LOGIN BUTTON -->
+            <button type="submit">
+                Log In
+            </button>
+
+        </form>
+
+        <!-- OTHER LINKS -->
+        <div class="links">
+
+            Don't have an account?
+            <a href="{{ url_for('register') }}">Register</a>
+
+            <p>
+                <a href="{{ url_for('home') }}">
+                    Back to Home
+                </a>
+            </p>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

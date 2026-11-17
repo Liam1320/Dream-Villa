@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Amenities | Dream Villa</title>
+
+    <!-- CSS FILES -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='pages.css') }}">
+
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVIGATION BAR -->
+<header class="navbar page-navbar">
+    <div class="nav-container">
+
+        <a href="{{ url_for('home') }}" class="brand">
+            <img src="{{ url_for('static', filename='images/dream-villa-logo.jpeg') }}" alt="Dream Villa logo">
+            <span>Dream Villa</span>
+        </a>
+
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('rooms') }}">Rooms</a>
+            <a class="active" href="{{ url_for('amenities') }}">Amenities</a>
+            <a href="{{ url_for('virtual_tour') }}">Virtual Tour</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+
+            <!-- CUSTOMER AND ADMIN NAVIGATION -->
+            {% if session.get('user_id') %}
+
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+
+                <!-- ADMIN ACCOUNT ONLY -->
+                {% if session.get('user_role') == 'admin' %}
+                    <a href="{{ url_for('admin') }}">Admin Dashboard</a>
+                {% endif %}
+
+            {% else %}
+
+                <!-- GUEST LOGIN -->
+                <a href="{{ url_for('login') }}">Login</a>
+
+            {% endif %}
+
+            <!-- BOOKING BUTTON -->
+            <a class="book-btn" href="{{ url_for('booking') }}">Book Now</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<!-- MAIN CONTENT -->
+<main class="inner-page">
+
+    <!-- PAGE HEADING -->
+    <section class="page-heading">
+        <p class="section-label">MADE FOR YOUR ENJOYMENT</p>
+        <h1>Resort Amenities</h1>
+        <p>Explore the facilities and spaces available during your stay.</p>
+    </section>
+
+    <!-- AMENITIES GRID -->
+    <div class="amenity-page-grid">
+
+        <!-- SWIMMING POOL -->
+        <article class="amenity-page-card">
+
+            <img src="{{ url_for('static', filename='images/pool-1.jpg') }}" alt="Swimming pool">
+
+            <div>
+                <h2>Swimming Pool</h2>
+                <p>Enjoy a refreshing swim and quality time with your group.</p>
+
+                <div class="mini-gallery">
+                    <img src="{{ url_for('static', filename='images/pool-2.jpg') }}" alt="Pool view 2">
+                    <img src="{{ url_for('static', filename='images/pool-3.jpg') }}" alt="Pool view 3">
+                    <img src="{{ url_for('static', filename='images/pool-4.jpg') }}" alt="Pool view 4">
+                </div>
+            </div>
+
+        </article>
+
+        <!-- COMFORT ROOMS -->
+        <article class="amenity-page-card">
+
+            <img src="{{ url_for('static', filename='images/comfort-1.jpg') }}" alt="Comfort room">
+
+            <div>
+                <h2>Comfort Rooms</h2>
+                <p>Clean and comfortable facilities for your convenience.</p>
+
+                <div class="mini-gallery">
+                    <img src="{{ url_for('static', filename='images/comfort-2.jpg') }}" alt="Comfort room view 2">
+                    <img src="{{ url_for('static', filename='images/comfort-3.jpg') }}" alt="Comfort room view 3">
+                </div>
+            </div>
+
+        </article>
+
+        <!-- PARKING AREA -->
+        <article class="amenity-page-card">
+
+            <img src="{{ url_for('static', filename='images/parking-1.jpg') }}" alt="Parking area">
+
+            <div>
+                <h2>Parking Area</h2>
+                <p>Convenient parking space for resort guests.</p>
+
+                <div class="mini-gallery">
+                    <img src="{{ url_for('static', filename='images/parking-2.jpg') }}" alt="Parking view 2">
+                    <img src="{{ url_for('static', filename='images/parking-3.jpg') }}" alt="Parking view 3">
+                </div>
+            </div>
+
+        </article>
+
+        <!-- GARDEN AREA -->
+        <article class="amenity-page-card">
+
+            <img src="{{ url_for('static', filename='images/garden-1.jpg') }}" alt="Garden area">
+
+            <div>
+                <h2>Garden Area</h2>
+                <p>Relax and enjoy the peaceful outdoor surroundings.</p>
+
+                <div class="mini-gallery">
+                    <img src="{{ url_for('static', filename='images/garden-2.jpg') }}" alt="Garden view 2">
+                    <img src="{{ url_for('static', filename='images/garden-3.jpg') }}" alt="Garden view 3">
+                    <img src="{{ url_for('static', filename='images/garden-4.jpg') }}" alt="Garden view 4">
+                    <img src="{{ url_for('static', filename='images/garden-5.jpg') }}" alt="Garden view 5">
+                    <img src="{{ url_for('static', filename='images/garden-6.jpg') }}" alt="Garden view 6">
+                </div>
+            </div>
+
+        </article>
+
+        <!-- KARAOKE -->
+        <article class="amenity-page-card">
+
+            <img src="{{ url_for('static', filename='images/karaoke-1.jpg') }}" alt="Karaoke area">
+
+            <div>
+                <h2>Karaoke</h2>
+                <p>Sing, enjoy music, and have fun with your family and friends.</p>
+            </div>
+
+        </article>
+
+        <!-- EVENTS AREA -->
+        <article class="amenity-page-card">
+
+            <img src="{{ url_for('static', filename='images/event-1.jpg') }}" alt="Events area">
+
+            <div>
+                <h2>Events Area</h2>
+                <p>A space for gatherings, celebrations, and special occasions.</p>
+
+                <div class="mini-gallery">
+                    <img src="{{ url_for('static', filename='images/event-2.jpg') }}" alt="Events view 2">
+                    <img src="{{ url_for('static', filename='images/event-3.jpg') }}" alt="Events view 3">
+                </div>
+            </div>
+
+        </article>
+
+        <!-- WI-FI -->
+        <article class="amenity-page-card amenity-text-card">
+
+            <div class="amenity-symbol">⌁</div>
+
+            <div>
+                <h2>Wi-Fi</h2>
+                <p>
+                    Wi-Fi availability is offered as a resort amenity.
+                    Please contact the resort for details.
+                </p>
+            </div>
+
+        </article>
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer class="page-footer">
+    <h2>Dream Villa</h2>
+
+    <div class="footer-links">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('rooms') }}">Rooms</a>
+        <a href="{{ url_for('amenities') }}">Amenities</a>
+        <a href="{{ url_for('virtual_tour') }}">Virtual Tour</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('booking') }}">Booking</a>
+    </div>
+
+    <p class="copyright">
+        © 2026 Dream Villa Resort. All Rights Reserved.
+    </p>
+</footer>
+
+</body>
+</html>

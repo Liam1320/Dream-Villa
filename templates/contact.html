@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contact | Dream Villa</title>
+
+    <!-- CSS FILES -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='pages.css') }}">
+
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- NAVIGATION BAR -->
+<header class="navbar page-navbar">
+    <div class="nav-container">
+
+        <a href="{{ url_for('home') }}" class="brand">
+            <img src="{{ url_for('static', filename='images/dream-villa-logo.jpeg') }}" alt="Dream Villa logo">
+            <span>Dream Villa</span>
+        </a>
+
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('rooms') }}">Rooms</a>
+            <a href="{{ url_for('amenities') }}">Amenities</a>
+            <a href="{{ url_for('virtual_tour') }}">Virtual Tour</a>
+            <a class="active" href="{{ url_for('contact') }}">Contact</a>
+
+            <!-- CUSTOMER AND ADMIN NAVIGATION -->
+            {% if session.get('user_id') %}
+
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+
+                <!-- ADMIN ACCOUNT ONLY -->
+                {% if session.get('user_role') == 'admin' %}
+                    <a href="{{ url_for('admin') }}">Admin Dashboard</a>
+                {% endif %}
+
+            {% else %}
+
+                <!-- GUEST LOGIN -->
+                <a href="{{ url_for('login') }}">Login</a>
+
+            {% endif %}
+
+            <!-- BOOKING BUTTON -->
+            <a class="book-btn" href="{{ url_for('booking') }}">Book Now</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<!-- MAIN CONTENT -->
+<main class="inner-page">
+
+    <!-- PAGE HEADING -->
+    <section class="page-heading">
+
+        <p class="section-label">WE ARE HERE TO HELP</p>
+
+        <h1>Get in Touch</h1>
+
+        <p>
+            Have questions about your reservation?
+            Contact Dream Villa.
+        </p>
+
+    </section>
+
+
+    <!-- CONTACT INFORMATION -->
+    <div class="contact-page-grid">
+
+        <!-- GCASH -->
+        <article class="contact-page-card">
+
+            <div class="contact-symbol">₱</div>
+
+            <h2>GCash</h2>
+
+            <p>
+                Use the official GCash details provided by the resort
+                when making your reservation payment.
+            </p>
+
+            <strong>GCash Number: 09XX XXX XXXX</strong>
+
+            <small>
+                Replace this placeholder with the correct resort number.
+            </small>
+
+        </article>
+
+
+        <!-- FACEBOOK -->
+        <article class="contact-page-card">
+
+            <div class="contact-symbol">f</div>
+
+            <h2>Facebook Page</h2>
+
+            <p>
+                Visit our official Facebook page for announcements
+                and inquiries.
+            </p>
+
+            <strong>Dream Villa Resort</strong>
+
+            <small>
+                Add your official Facebook page link when available.
+            </small>
+
+        </article>
+
+
+        <!-- CONTACT NUMBER -->
+        <article class="contact-page-card">
+
+            <div class="contact-symbol">☎</div>
+
+            <h2>Contact Number</h2>
+
+            <p>
+                For questions about availability and reservations,
+                contact the resort.
+            </p>
+
+            <strong>Contact Number: Add your number</strong>
+
+            <small>
+                Replace this text with the resort contact number.
+            </small>
+
+        </article>
+
+    </div>
+
+
+    <!-- BOOKING CALL TO ACTION -->
+    <section class="contact-cta">
+
+        <h2>Planning Your Next Getaway?</h2>
+
+        <p>
+            Check the available dates and submit your reservation online.
+        </p>
+
+        <a class="primary-btn" href="{{ url_for('booking') }}">
+            Go to Booking →
+        </a>
+
+    </section>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer class="page-footer">
+
+    <h2>Dream Villa</h2>
+
+    <div class="footer-links">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('rooms') }}">Rooms</a>
+        <a href="{{ url_for('amenities') }}">Amenities</a>
+        <a href="{{ url_for('virtual_tour') }}">Virtual Tour</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('booking') }}">Booking</a>
+    </div>
+
+    <p class="copyright">
+        © 2026 Dream Villa Resort. All Rights Reserved.
+    </p>
+
+</footer>
+
+</body>
+</html>

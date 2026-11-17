@@ -1,0 +1,673 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Booking Confirmation | Dream Villa</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7f1;
+            color: #26372f;
+        }
+
+        header {
+            background: #205744;
+            color: white;
+            padding: 20px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        header a {
+            color: #205744;
+            background: white;
+            padding: 10px 16px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 92%;
+            margin: 35px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 28px;
+            border-radius: 14px;
+            margin-bottom: 22px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .success-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: #e4f4e9;
+            color: #205744;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            margin: 0 auto 15px;
+        }
+
+        .heading {
+            text-align: center;
+        }
+
+        .heading h2 {
+            color: #205744;
+            margin-bottom: 8px;
+        }
+
+        .heading p {
+            color: #718078;
+            font-size: 14px;
+        }
+
+        .booking-number {
+            display: inline-block;
+            background: #edf4ef;
+            color: #205744;
+            padding: 9px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .section-title {
+            color: #205744;
+            font-size: 19px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 13px 0;
+            border-bottom: 1px solid #e8eee8;
+            font-size: 14px;
+        }
+
+        .detail-row span {
+            color: #718078;
+        }
+
+        .detail-row strong {
+            text-align: right;
+            color: #26372f;
+        }
+
+        .total-row {
+            margin-top: 12px;
+            padding-top: 15px;
+            border-top: 2px solid #205744;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            font-size: 19px;
+            font-weight: bold;
+            color: #205744;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff2d9;
+            color: #946200;
+        }
+
+        .paid,
+        .confirmed {
+            background: #e5f5e9;
+            color: #24733c;
+        }
+
+        .rejected {
+            background: #fde8e7;
+            color: #a93226;
+        }
+
+        .payment-box {
+            background: #edf4ef;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .payment-box h3 {
+            color: #205744;
+            margin-top: 0;
+        }
+
+        .payment-box p {
+            font-size: 14px;
+            line-height: 1.7;
+            margin: 7px 0;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dce5dc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #205744;
+        }
+
+        .help-text {
+            color: #718078;
+            font-size: 12px;
+            margin-top: 7px;
+        }
+
+        .button {
+            display: inline-block;
+            border: none;
+            padding: 13px 18px;
+            border-radius: 8px;
+            background: #205744;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .button:hover {
+            background: #163e30;
+        }
+
+        .button.secondary {
+            background: #e8eee8;
+            color: #205744;
+        }
+
+        .button.secondary:hover {
+            background: #dce8dc;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .alert {
+            padding: 13px 16px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .alert.success {
+            background: #e8f7ed;
+            color: #216b3a;
+        }
+
+        .alert.error {
+            background: #fdecea;
+            color: #a93226;
+        }
+
+        .alert.warning {
+            background: #fff4df;
+            color: #8a5a00;
+        }
+
+        .alert.info {
+            background: #eaf3fb;
+            color: #245b86;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #718078;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 20px;
+            }
+
+            .detail-row,
+            .total-row {
+                font-size: 13px;
+            }
+
+            .button-group .button {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            header a,
+            .payment-section,
+            .button-group,
+            footer {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+            }
+
+            .card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Dream Villa</h1>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</header>
+
+<main class="container">
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+    <!-- CONFIRMATION HEADING -->
+    <section class="card heading">
+
+        <div class="success-icon">✓</div>
+
+        <h2>Booking Submitted Successfully!</h2>
+
+        <p>
+            Thank you for choosing Dream Villa Private Resort.
+            Please review your reservation details below.
+        </p>
+
+        <div class="booking-number">
+            Booking ID: {{ booking.id }}
+        </div>
+
+    </section>
+
+
+    <!-- BOOKING DETAILS -->
+    <section class="card">
+
+        <h2 class="section-title">
+            Reservation Details
+        </h2>
+
+        <div class="detail-row">
+            <span>Customer Name</span>
+            <strong>{{ booking.name }}</strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Email Address</span>
+            <strong>{{ booking.email }}</strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Selected Rooms</span>
+            <strong>{{ booking.room }}</strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Booking Type</span>
+            <strong>{{ booking.booking_type }}</strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Check-in</span>
+            <strong>
+                {{ booking.checkin.strftime('%B %d, %Y %I:%M %p') if booking.checkin else 'N/A' }}
+            </strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Check-out</span>
+            <strong>
+                {{ booking.checkout.strftime('%B %d, %Y %I:%M %p') if booking.checkout else 'N/A' }}
+            </strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Number of Guests</span>
+            <strong>{{ booking.guests }}</strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Booking Status</span>
+            <strong>
+                {% if booking.status|lower == 'confirmed' %}
+                    <span class="status confirmed">Confirmed</span>
+                {% else %}
+                    <span class="status pending">
+                        {{ booking.status }}
+                    </span>
+                {% endif %}
+            </strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Payment Status</span>
+            <strong>
+                {% if booking.payment_status|lower == 'paid' %}
+                    <span class="status paid">Paid</span>
+                {% elif booking.payment_status|lower == 'rejected' %}
+                    <span class="status rejected">Rejected</span>
+                {% else %}
+                    <span class="status pending">Pending</span>
+                {% endif %}
+            </strong>
+        </div>
+
+        <!-- PRICE BREAKDOWN -->
+        <div class="detail-row">
+            <span>Base Booking Rate</span>
+            <strong>
+                ₱{{ "{:,.2f}".format(base_price|float) }}
+            </strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Room 2 Additional Fee</span>
+            <strong>
+                ₱{{ "{:,.2f}".format(room_fee|float) }}
+            </strong>
+        </div>
+
+        <div class="total-row">
+            <span>Total Booking Rate</span>
+            <span>₱{{ "{:,.2f}".format(total_price|float) }}</span>
+        </div>
+
+        <div class="detail-row">
+            <span>Reservation Fee</span>
+            <strong>
+                ₱{{ "{:,.2f}".format(reservation_fee|float) }}
+            </strong>
+        </div>
+
+    </section>
+
+
+    <!-- PAYMENT SECTION -->
+    {% if booking.payment_status|lower != 'paid' and booking.status|lower == 'pending' %}
+
+    <section class="card payment-section">
+
+        <h2 class="section-title">
+            GCash Payment
+        </h2>
+
+        <div class="payment-box">
+
+            <h3>Dream Villa Payment Information</h3>
+
+            <p>
+                <strong>Payment Method:</strong> GCash
+            </p>
+
+            <p>
+                <strong>Account Name:</strong> Dream Villa
+            </p>
+
+            <p>
+                <strong>GCash Number:</strong>
+                Replace with your actual GCash number
+            </p>
+
+            <p>
+                <strong>Reservation Fee:</strong>
+                ₱{{ "{:,.2f}".format(reservation_fee|float) }}
+            </p>
+
+            <p>
+                Please pay the reservation fee and upload your
+                payment receipt for admin verification.
+            </p>
+
+        </div>
+
+
+        <!-- PREVIOUS PAYMENT SUBMISSION NOTICE -->
+        {% if booking.receipt_filename %}
+
+            {% if booking.payment_status|lower == 'rejected' %}
+
+                <div class="alert error">
+                    <strong>Payment Rejected!</strong><br>
+                    Your previous payment submission was rejected.
+                    Please check your GCash reference number and upload
+                    the correct payment receipt below.
+                </div>
+
+            {% elif booking.payment_status|lower == 'pending' %}
+
+                <div class="alert warning">
+                    <strong>Payment Submitted!</strong><br>
+                    Your previous receipt is waiting for admin verification.
+                    If you uploaded the wrong receipt or entered an incorrect
+                    reference number, you can submit the correct information below.
+                    Your new submission will replace the previous receipt.
+                </div>
+
+            {% endif %}
+
+        {% else %}
+
+            <div class="alert info">
+                Please enter your GCash reference number and upload
+                your payment receipt.
+            </div>
+
+        {% endif %}
+
+
+        <!-- PAYMENT FORM -->
+        <h3 class="section-title">
+            {% if booking.receipt_filename %}
+                Submit New Payment Receipt
+            {% else %}
+                Submit Your Payment Details
+            {% endif %}
+        </h3>
+
+        <form
+            method="POST"
+            action="{{ url_for('submit_payment', booking_id=booking.id) }}"
+            enctype="multipart/form-data"
+        >
+
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+            <div class="form-group">
+
+                <label for="gcash_reference">
+                    GCash Reference Number
+                </label>
+
+                <input
+                    type="text"
+                    id="gcash_reference"
+                    name="gcash_reference"
+                    placeholder="Enter your correct GCash reference number"
+                    value="{{ booking.gcash_reference or '' }}"
+                    maxlength="100"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="receipt">
+                    Upload New Payment Receipt
+                </label>
+
+                <input
+                    type="file"
+                    id="receipt"
+                    name="receipt"
+                    accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                    required
+                >
+
+                <p class="help-text">
+                    Accepted formats: JPG, JPEG, PNG, WEBP.
+                    Maximum file size: 5 MB.
+                </p>
+
+            </div>
+
+            <button type="submit" class="button">
+                {% if booking.receipt_filename %}
+                    Resubmit Payment Receipt
+                {% else %}
+                    Submit Payment Receipt
+                {% endif %}
+            </button>
+
+        </form>
+
+    </section>
+
+    {% endif %}
+
+
+    <!-- PAYMENT ALREADY SUBMITTED -->
+    {% if booking.receipt_filename %}
+
+    <section class="card">
+
+        <h2 class="section-title">
+            Submitted Payment Information
+        </h2>
+
+        <div class="detail-row">
+            <span>GCash Reference Number</span>
+            <strong>
+                {{ booking.gcash_reference or 'Not provided' }}
+            </strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Receipt</span>
+            <strong>Uploaded</strong>
+        </div>
+
+        {% if booking.payment_status|lower == 'pending' %}
+
+            <div class="alert warning">
+                Your payment receipt is waiting for admin verification.
+            </div>
+
+        {% elif booking.payment_status|lower == 'paid' %}
+
+            <div class="alert success">
+                Your payment has been verified successfully.
+            </div>
+
+        {% elif booking.payment_status|lower == 'rejected' %}
+
+            <div class="alert error">
+                Your previous payment was rejected.
+                Please submit a corrected receipt using the payment form above.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+    {% endif %}
+
+
+    <!-- ACTION BUTTONS -->
+    <div class="button-group">
+
+        <button
+            type="button"
+            class="button secondary"
+            onclick="window.print()"
+        >
+            Print Booking Confirmation
+        </button>
+
+        <a href="{{ url_for('home') }}" class="button">
+            Back to Home
+        </a>
+
+    </div>
+
+</main>
+
+<footer>
+    © 2026 Dream Villa Private Resort. All rights reserved.
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dream Villa | Your Private Escape</title>
+
+    <!-- CSS FILES -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='pages.css') }}">
+
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ==========================================
+     NAVIGATION
+========================================== -->
+
+<header class="navbar page-navbar">
+
+    <div class="nav-container">
+
+        <a href="{{ url_for('home') }}" class="brand">
+
+            <img src="{{ url_for('static', filename='images/dream-villa-logo.jpeg') }}"
+                 alt="Dream Villa Logo">
+
+            <span>Dream Villa</span>
+
+        </a>
+
+        <nav>
+
+            <a href="{{ url_for('home') }}" class="active">Home</a>
+
+            <a href="{{ url_for('rooms') }}">Rooms</a>
+
+            <a href="{{ url_for('amenities') }}">Amenities</a>
+
+            <a href="{{ url_for('virtual_tour') }}">Virtual Tour</a>
+
+            <a href="{{ url_for('contact') }}">Contact</a>
+
+            <!-- CUSTOMER AND ADMIN NAVIGATION -->
+            {% if session.get('user_id') %}
+
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+
+                <!-- ADMIN ACCOUNT ONLY -->
+                {% if session.get('user_role') == 'admin' %}
+
+                    <a href="{{ url_for('admin') }}">Admin Dashboard</a>
+
+                {% endif %}
+
+            {% else %}
+
+                <!-- GUEST / CUSTOMER LOGIN -->
+                <a href="{{ url_for('login') }}">Login</a>
+
+            {% endif %}
+
+            <!-- BOOKING BUTTON -->
+            <a href="{{ url_for('booking') }}" class="book-btn">
+                Book Now
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- ==========================================
+     HERO SECTION
+========================================== -->
+
+<main class="hero page-home-hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <p class="hero-label">WELCOME TO</p>
+
+        <h1>Dream Villa</h1>
+
+        <h2>Your Private Escape</h2>
+
+        <div class="gold-line"></div>
+
+        <p class="hero-description">
+            Relax, enjoy, and create unforgettable memories
+            with your family and friends.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="{{ url_for('booking') }}"
+               class="primary-btn">
+                Reserve Your Stay →
+            </a>
+
+            <a href="{{ url_for('rooms') }}"
+               class="outline-btn">
+                Explore Our Rooms →
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-bottom">
+
+        <span>PRIVATE RESORT • RELAX • ENJOY</span>
+
+        <span>YOUR PRIVATE GETAWAY</span>
+
+    </div>
+
+</main>
+
+
+<!-- ==========================================
+     INTRODUCTION
+========================================== -->
+
+<section class="intro">
+
+    <p class="section-label">THE DREAM VILLA EXPERIENCE</p>
+
+    <h2>
+        A Place Made for<br>
+        Beautiful Memories.
+    </h2>
+
+    <p>
+        Dream Villa is your private escape for family gatherings,
+        celebrations, and relaxing moments. Enjoy comfortable
+        rooms, refreshing surroundings, and quality time with
+        the people you love.
+    </p>
+
+    <a href="{{ url_for('booking') }}" class="text-link">
+        Plan Your Getaway →
+    </a>
+
+</section>
+
+
+<!-- ==========================================
+     FEATURE HIGHLIGHTS
+========================================== -->
+
+<section class="page-feature-section">
+
+    <div class="section-heading">
+
+        <p class="section-label">DISCOVER THE RESORT</p>
+
+        <h2>Experience Dream Villa</h2>
+
+        <p>
+            Everything you need for a relaxing and memorable stay.
+        </p>
+
+    </div>
+
+    <div class="page-card-grid">
+
+        <!-- ROOMS -->
+        <a href="{{ url_for('rooms') }}" class="page-feature-card">
+
+            <img src="{{ url_for('static', filename='images/room-1-cover.jpg') }}"
+                 alt="Dream Villa Room">
+
+            <div>
+
+                <h3>Comfortable Rooms</h3>
+
+                <p>
+                    Discover our rooms and find a comfortable
+                    space for your stay.
+                </p>
+
+                <span>Explore Rooms →</span>
+
+            </div>
+
+        </a>
+
+
+        <!-- SWIMMING POOL -->
+        <a href="{{ url_for('amenities') }}" class="page-feature-card">
+
+            <img src="{{ url_for('static', filename='images/pool-1.jpg') }}"
+                 alt="Dream Villa Swimming Pool">
+
+            <div>
+
+                <h3>Swimming Pool</h3>
+
+                <p>
+                    Enjoy a refreshing swimming experience
+                    with your family and friends.
+                </p>
+
+                <span>Explore Amenities →</span>
+
+            </div>
+
+        </a>
+
+
+        <!-- VIRTUAL TOUR -->
+        <a href="{{ url_for('virtual_tour') }}" class="page-feature-card">
+
+            <img src="{{ url_for('static', filename='images/resort-hero.jpg') }}"
+                 alt="Dream Villa Resort">
+
+            <div>
+
+                <h3>Virtual Tour</h3>
+
+                <p>
+                    Take a closer look at Dream Villa
+                    through our resort video.
+                </p>
+
+                <span>Watch Virtual Tour →</span>
+
+            </div>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     WHY CHOOSE DREAM VILLA
+========================================== -->
+
+<section class="home-benefits">
+
+    <div class="section-heading">
+
+        <p class="section-label">RELAX • ENJOY • UNWIND</p>
+
+        <h2>Make Every Moment Special</h2>
+
+        <p>
+            A private place to spend quality time
+            with the people who matter.
+        </p>
+
+    </div>
+
+    <div class="benefit-grid">
+
+        <div class="benefit-item">
+
+            <div class="benefit-icon">🏡</div>
+
+            <h3>Private Getaway</h3>
+
+            <p>
+                Enjoy a relaxing private resort experience
+                with your group.
+            </p>
+
+        </div>
+
+
+        <div class="benefit-item">
+
+            <div class="benefit-icon">🛏️</div>
+
+            <h3>Comfortable Rooms</h3>
+
+            <p>
+                Rest and relax in our available
+                accommodation spaces.
+            </p>
+
+        </div>
+
+
+        <div class="benefit-item">
+
+            <div class="benefit-icon">🏊</div>
+
+            <h3>Resort Amenities</h3>
+
+            <p>
+                Explore the facilities and amenities
+                available at Dream Villa.
+            </p>
+
+        </div>
+
+
+        <div class="benefit-item">
+
+            <div class="benefit-icon">🎉</div>
+
+            <h3>Special Gatherings</h3>
+
+            <p>
+                Create wonderful memories during
+                family gatherings and celebrations.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     VIRTUAL TOUR PREVIEW
+========================================== -->
+
+<section class="home-tour-section">
+
+    <div class="home-tour-image">
+
+        <img src="{{ url_for('static', filename='images/pool-2.jpg') }}"
+             alt="Dream Villa Resort">
+
+    </div>
+
+    <div class="home-tour-content">
+
+        <p class="section-label">DISCOVER DREAM VILLA</p>
+
+        <h2>See More Before You Visit</h2>
+
+        <p>
+            Want to see more of the resort?
+            Explore our virtual tour and discover
+            the different areas of Dream Villa.
+        </p>
+
+        <a href="{{ url_for('virtual_tour') }}"
+           class="primary-btn">
+            Watch Virtual Tour →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     BOOKING BANNER
+========================================== -->
+
+<section class="booking-banner">
+
+    <div>
+
+        <p class="section-label">YOUR GETAWAY STARTS HERE</p>
+
+        <h2>Ready for Your Dream Escape?</h2>
+
+        <p>
+            Choose your preferred date and reserve your stay.
+        </p>
+
+    </div>
+
+    <a href="{{ url_for('booking') }}" class="primary-btn">
+        Check Availability →
+    </a>
+
+</section>
+
+</main>
+
+
+<!-- ==========================================
+     FOOTER
+========================================== -->
+
+<footer class="page-footer">
+
+    <h2>Dream Villa</h2>
+
+    <p>
+        Your private place to relax, enjoy,
+        and create unforgettable memories.
+    </p>
+
+    <div class="footer-links">
+
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('rooms') }}">Rooms</a>
+
+        <a href="{{ url_for('amenities') }}">Amenities</a>
+
+        <a href="{{ url_for('virtual_tour') }}">Virtual Tour</a>
+
+        <a href="{{ url_for('contact') }}">Contact</a>
+
+        <a href="{{ url_for('booking') }}">Booking</a>
+
+    </div>
+
+    <p class="copyright">
+        © 2026 Dream Villa Resort. All Rights Reserved.
+    </p>
+
+</footer>
+
+</body>
+</html>
