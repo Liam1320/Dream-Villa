@@ -52,6 +52,27 @@ def password_meets_requirements(password):
         and re.search(r"[0-9]", password) is not None
     )
 
+class Booking:
+    """Represents a Dream Villa reservation."""
+
+    def __init__(self, booking_type, add_second_room=False):
+        self.booking_type = booking_type
+        self.add_second_room = add_second_room
+
+    def calculate_price(self):
+        """Calculate the booking price and duration."""
+        booking_options = {
+            "Day": (4000, 10),
+            "Night": (5000, 10),
+            "Full day": (7000, 22)
+        }
+
+        base_price, duration = booking_options[self.booking_type]
+        room_fee = 500 if self.add_second_room else 0
+        total_price = base_price + room_fee
+
+        return base_price, room_fee, total_price, duration
+
 # ==========================================
 # APPLICATION SETTINGS
 # ==========================================
@@ -1121,10 +1142,10 @@ def admin():
         cursor = db.cursor(dictionary=True)
 
         cursor.execute("""
-            SELECT *
-            FROM bookings
-            ORDER BY checkin ASC
-        """)
+    SELECT *
+    FROM bookings
+    ORDER BY id DESC
+""")
         bookings = cursor.fetchall()
 
         cursor.execute("""
@@ -1151,6 +1172,13 @@ def admin():
             FROM bookings
         """)
         analytics = cursor.fetchone()
+        cursor.execute("""
+         SELECT *
+      FROM bookings
+      ORDER BY id DESC
+       LIMIT 5
+     """)
+        recent_bookings = cursor.fetchall()
 
         cursor.execute("""
             SELECT id, admin_id, admin_name, action, details,
